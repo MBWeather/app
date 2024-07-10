@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartData, ChartOptions } from 'chart.js';
-import { BaseChartDirective, NG_CHARTS_CONFIGURATION } from 'ng2-charts';
 import { ApiService } from 'src/app/services/api/api.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
+
+import { Location } from '../../types/location';
+
+const MILLISECONDS = 1000;
+const KELVIN = 273.15;
 
 @Component({
   selector: 'app-weather-forcast',
@@ -14,7 +18,7 @@ export class WeatherForcastComponent implements OnInit {
   protected weatherData!: WeatherApiResponse;
   protected lastUpdated!: Date;
 
-  public chartData: ChartData<'line'> = {
+  protected chartData: ChartData<'line'> = {
     datasets: [
       {
         data: [],
@@ -26,7 +30,7 @@ export class WeatherForcastComponent implements OnInit {
     labels: []
   };
 
-  public chartOptions: ChartOptions<'line'> = {
+  protected chartOptions: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -35,6 +39,8 @@ export class WeatherForcastComponent implements OnInit {
       }
     }
   };
+
+  @Input() public location!: Location;
 
   constructor(private apiService: ApiService) { }
 
@@ -56,8 +62,8 @@ export class WeatherForcastComponent implements OnInit {
 
     return new Promise((resolve, reject) => {
       this.apiService.get<WeatherApiResponse>('3.0/onecall', {
-        lat: '46.5547',
-        lon: '15.6459'
+        lat: this.location.coordinates.lat,
+        lon: this.location.coordinates.lon,
       })?.subscribe({
         next: (response: WeatherApiResponse) => {
           console.log("Weather data fetched successfully.");
@@ -89,8 +95,8 @@ export class WeatherForcastComponent implements OnInit {
     }
 
     if (this.weatherData) {
-      this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * 1000).toLocaleDateString());
-      this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - 273.15); // Convert Kelvin to Celsius
+      this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * MILLISECONDS).toLocaleDateString());
+      this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - KELVIN); // Convert Kelvin to Celsius
     }
   }
 }
