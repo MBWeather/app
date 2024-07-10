@@ -5,15 +5,16 @@ import { WeatherApiResponse } from 'src/app/types/weather';
 
 import { Location } from '../../types/location';
 
-const MILLISECONDS = 1000;
-const KELVIN = 273.15;
-
 @Component({
   selector: 'app-weather-forcast',
   templateUrl: './weather-forcast.component.html',
   styleUrls: ['./weather-forcast.component.scss'],
 })
 export class WeatherForcastComponent implements OnInit {
+
+  protected readonly MILLISECONDS = 1000;
+  protected readonly KELVIN = 273.15;
+
   protected loading: boolean = true;
   protected weatherData!: WeatherApiResponse;
   protected lastUpdated!: Date;
@@ -48,18 +49,28 @@ export class WeatherForcastComponent implements OnInit {
     this.triggerFetchWD();
   }
 
-  protected triggerFetchWD(): void {
+  protected triggerFetchWD(isRefresh: boolean = false): void {
     this.loading = true;
-    this.fetchWeatherData().then(() => {
+    this.fetchWeatherData(isRefresh).then(() => {
       this.loading = false;
       this.lastUpdated = new Date();
       this.updateChartData();
     });
   }
 
-  private async fetchWeatherData(): Promise<void> {
+  private async fetchWeatherData(isRefresh: boolean = false): Promise<void> {
     let hasError = false;
 
+    // If it's not a refresh and there is data in the local storage, use it
+    if (
+      !isRefresh &&  // Check if it's not a refresh
+      localStorage.getItem('weatherData') &&   // Check if there is data in the local storage
+      (`${localStorage.getItem('weatherData')}`).length < 10) { // Check if the data is too small to be valid
+      this.weatherData = JSON.parse(localStorage.getItem('weatherData') || '{}');
+      return;
+    }
+
+    // Otherwise, fetch the data from the API
     return new Promise((resolve, reject) => {
       this.apiService.get<WeatherApiResponse>('3.0/onecall', {
         lat: this.location.coordinates.lat,
@@ -69,6 +80,9 @@ export class WeatherForcastComponent implements OnInit {
           console.log("Weather data fetched successfully.");
           console.log(response);
           this.weatherData = response;
+
+          // Save the data to local storage
+          localStorage.setItem('weatherData', JSON.stringify(response));
         },
         error: (error) => {
           console.log("An error occurred while fetching weather data.");
@@ -95,8 +109,8 @@ export class WeatherForcastComponent implements OnInit {
     }
 
     if (this.weatherData) {
-      this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * MILLISECONDS).toLocaleDateString());
-      this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - KELVIN); // Convert Kelvin to Celsius
+      this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * this.MILLISECONDS).toLocaleDateString());
+      this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - this.KELVIN); // Convert Kelvin to Celsius
     }
   }
 }
