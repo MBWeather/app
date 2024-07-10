@@ -70,6 +70,8 @@ export interface DailyWeather {
   pop: number;
   rain?: number;
   uvi: number;
+  sunriseTime?: string;
+  sunsetTime?: string;
 }
 
 export interface DailyTemperature {

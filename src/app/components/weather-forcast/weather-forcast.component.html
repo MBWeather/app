@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-      <div class="current-weather">
+      <div class="current-forecast">
         <div class="weather-icon">
           <img [src]="'https://openweathermap.org/img/wn/' + weatherData.current.weather[0].icon + '@2x.png'" alt="Weather Icon">
         </div>
@@ -29,8 +29,21 @@
         <div class="forecast-item" *ngFor="let day of weatherData.daily?.slice(1, 6);">
           <div class="date">{{ day.dt * MILLISECONDS | date }}</div>
           <div class="details">
-            <div class="temperature">Min: {{ day.temp.min - KELVIN | number: '1.0-0' }}°C, Max: {{ day.temp.max - KELVIN | number: '1.0-0' }}°C</div>
-            <div class="condition">{{ day.weather[0].description }}</div>
+            <div class="block">
+              <div class="temperature">
+                <p class="text">
+                  <span class="min">{{ day.temp.min - KELVIN | number: '1.0-0' }}°C</span><br>
+                  <span class="max">{{ day.temp.max - KELVIN | number: '1.0-0' }}°C</span>
+                </p>
+              </div>
+              <div class="sun-time">
+                <p class="text">
+                  <span class="sunrise">{{ day.sunriseTime }}</span><br>
+                  <span class="sunset">{{ day.sunsetTime }}</span>
+                </p>
+              </div>
+              <div class="condition">{{ day.weather[0].description }}</div>
+            </div>
             <div class="forecast-icon">
               <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png'" alt="Weather Icon">
             </div>

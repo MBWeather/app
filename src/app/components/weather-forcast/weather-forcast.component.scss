@@ -28,15 +28,29 @@
   .row {
     display: flex;
 
-    @media (max-width: 920px) {
+    @media (max-width: 960px) {
       display: block;
 
-      .current-weather {
+      .current-forecast {
         justify-content: center;
+
+        .weather-details {
+          display: flex;
+          flex-wrap: wrap;
+          p {
+            margin: 10px;
+            padding: 10px;
+          }
+
+          h2 {
+            margin: 10px;
+            padding: 10px;
+          }
+        }
       }
     }
 
-    .current-weather {
+    .current-forecast {
       min-width: 25vw;
       display: flex;
       align-items: center;
@@ -46,6 +60,7 @@
         img {
           width: 100px;
           height: 100px;
+          object-fit: none;
         }
       }
   
@@ -68,6 +83,7 @@
         width: 100%;
         max-width: 320px;
         padding: 8px;
+        margin: 8px;
         margin-bottom: 16px;
         border: 1px solid var(--ion-color-primary);
         border-radius: 8px;
@@ -82,7 +98,11 @@
         .details {
           display: flex;
           justify-content: space-between;
-  
+ 
+          .block {
+            display: block;
+          }
+
           .temperature {
             color: var(--ion-color-primary);
           }

@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
 
 import { Location } from '../../types/location';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-weather-forcast',
@@ -55,6 +56,17 @@ export class WeatherForcastComponent implements OnInit {
       this.loading = false;
       this.lastUpdated = new Date();
       this.updateChartData();
+
+      if (!this.weatherData.daily) return;
+
+      // Format the sunrise and sunset times with moment.js
+      this.weatherData.daily.forEach(daily => {
+
+
+        // Format to 21.10.2018 ob 13:25
+        daily.sunriseTime = moment(daily.sunrise * this.MILLISECONDS).format('DD.MM.YYYY ob HH:mm');
+        daily.sunsetTime = moment(daily.sunset * this.MILLISECONDS).format('DD.MM.YYYY ob HH:mm');
+      });
     });
   }
 
@@ -77,16 +89,13 @@ export class WeatherForcastComponent implements OnInit {
         lon: this.location.coordinates.lon,
       })?.subscribe({
         next: (response: WeatherApiResponse) => {
-          console.log("Weather data fetched successfully.");
-          console.log(response);
           this.weatherData = response;
 
           // Save the data to local storage
           localStorage.setItem('weatherData', JSON.stringify(response));
         },
         error: (error) => {
-          console.log("An error occurred while fetching weather data.");
-          console.error(error);
+          console.error("An error occurred while fetching weather data:", error);
 
           // Set hasError to true
           hasError = true;
