@@ -1,0 +1,7 @@
+{
+  "name": "MBWeather",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
