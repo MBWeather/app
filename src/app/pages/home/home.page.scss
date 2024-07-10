@@ -1,27 +1,11 @@
-#container {
-  text-align: center;
+.global-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+    min-height: calc(100vh - 56px);
+    min-width: 100vw;
+    max-width: 100vw;
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+    overflow-x: hidden;
 }

@@ -13,9 +13,17 @@ const PROVIDERS = [
   provideHttpClient()
 ];
 
+const IMPORTS = [
+  BrowserModule,
+  IonicModule.forRoot(),
+  AppRoutingModule
+];
+
+const DECLARATIONS = [AppComponent];
+
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  declarations: DECLARATIONS,
+  imports: IMPORTS,
   providers: [...PROVIDERS],
   bootstrap: [AppComponent],
 })

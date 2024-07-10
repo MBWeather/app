@@ -5,15 +5,26 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { WeatherForcastComponent } from 'src/app/components/weather-forcast/weather-forcast.component';
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
+const IMPORTS = [
+  CommonModule,
+  FormsModule,
+  IonicModule,
+  HomePageRoutingModule,
+  BaseChartDirective
+];
+
+const DECLARATIONS = [HomePage, WeatherForcastComponent];
+
+const PROVIDERS = [
+  provideCharts(withDefaultRegisterables())
+];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
-  ],
-  declarations: [HomePage]
+  imports: IMPORTS,
+  declarations: DECLARATIONS,
+  providers: PROVIDERS
 })
 export class HomePageModule {}
