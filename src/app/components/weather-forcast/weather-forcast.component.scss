@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 480px;
+  min-width: 320px;
+
+  padding: 16px;
+
+  border: 1px solid var(--ion-color-primary);
+
+  .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .timestamp {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    color: var(--ion-color-primary);
+    margin-bottom: 16px;
+  }
+
+  .forecast {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .forecast-item {
+      width: 100%;
+      max-width: 320px;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid var(--ion-color-primary);
+      border-radius: 8px;
+      background-color: var(--ion-color-light);
+
+      .date {
+        font-weight: bold;
+        color: var(--ion-color-primary);
+        margin-bottom: 8px;
+      }
+
+      .details {
+        display: flex;
+        justify-content: space-between;
+
+        .temperature {
+          color: var(--ion-color-primary);
+        }
+
+        .condition {
+          color: var(--ion-color-dark);
+        }
+      }
+    }
+  }
+
+  ion-button {
+    margin-top: 16px;
+  }
+}
