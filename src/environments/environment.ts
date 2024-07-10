@@ -33,7 +33,7 @@ export const environment = {
       },
       languages: {
         default: 'en',
-        available: ['si', 'en'],
+        available: [{short: 'si', name: "app.slovene"}, {short: 'en', name: "app.english"}],
       },
       storage: {
         keys: {
