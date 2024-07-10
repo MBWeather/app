@@ -5,6 +5,9 @@ export const environment = {
       primary: {
         url: 'https://api.openweathermap.org/',
         api: 'data/',
+        keys: {
+          "3.0/onecall": '7b6b6d5c44605c7d595357c0d2e2e6d7'
+        },
         headers: {
           // Any other default headers can be added here
         }
