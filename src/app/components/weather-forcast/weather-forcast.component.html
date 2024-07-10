@@ -5,20 +5,49 @@
 
   <div *ngIf="!loading">
     <div class="timestamp">
-      {{ lastUpdated | date: 'dd.MM.yyyy \'at\' HH:mm' }}
+      Last updated: {{ lastUpdated | date: 'dd.MM.yyyy \'at\' HH:mm' }}
+    </div>
+
+    <div class="current-weather">
+      <div class="weather-icon">
+        <img [src]="'https://openweathermap.org/img/wn/' + weatherData.current.weather[0].icon + '@2x.png'" alt="Weather Icon">
+      </div>
+      <div class="weather-details">
+        <h2>{{ weatherData.current.temp - 273.15 | number: '1.0-0' }}°C</h2>
+        <p>{{ weatherData.current.weather[0].description }}</p>
+        <p>Feels like: {{ weatherData.current.feels_like - 273.15 | number: '1.0-0' }}°C</p>
+        <p *ngIf="weatherData.daily">Min: {{ weatherData.daily[0].temp.min - 273.15 | number: '1.0-0' }}°C, Max: {{ weatherData.daily[0].temp.max - 273.15 | number: '1.0-0' }}°C</p>
+        <p>Humidity: {{ weatherData.current.humidity }}%</p>
+        <p>Wind: {{ weatherData.current.wind_speed }} m/s</p>
+        <p>Pressure: {{ weatherData.current.pressure }} hPa</p>
+      </div>
     </div>
 
     <div class="forecast">
-      <div class="forecast-item" *ngFor="let item of forecast">
-        <div class="date">{{ item.date | date: 'dd.MM.yyyy' }}</div>
-        <div class="details">
-          <div class="temperature">Temp: {{ item.temp }}°C</div>
-          <div class="condition">{{ item.condition }}</div>
+      <h3>5-Day Forecast</h3>
+      <div class="forecast-item" *ngFor="let day of weatherData.daily; let i = index">
+        <div *ngIf="i < 5">
+          <div class="date">{{ day.dt * 1000 | date: 'EEEE, MMM d' }}</div>
+          <div class="details">
+            <div class="temperature">Min: {{ day.temp.min - 273.15 | number: '1.0-0' }}°C, Max: {{ day.temp.max - 273.15 | number: '1.0-0' }}°C</div>
+            <div class="condition">{{ day.weather[0].description }}</div>
+            <div class="forecast-icon">
+              <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png'" alt="Weather Icon">
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <ion-button expand="full" (click)="refreshForecast()">
+    <div class="chart-container">
+      <canvas baseChart
+        [data]="chartData"
+        [options]="chartOptions"
+        [type]="'line'">
+      </canvas>
+    </div>
+
+    <ion-button expand="full" (click)="triggerFetchWD()">
       Refresh
     </ion-button>
   </div>
