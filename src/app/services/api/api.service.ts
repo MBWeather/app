@@ -11,28 +11,13 @@ export class ApiService {
   private server: Server = {
     url: environment.api.servers.primary.url,
     api: environment.api.servers.primary.api,
-    headers: { ...environment.api.primaryHeaders, ...environment.api.servers.primary.headers }
+    headers: { ...environment.api.primaryHeaders, ...environment.api.servers.primary.headers },
+    keys: environment.api.servers.primary.keys
   };
 
   constructor(
     private http: HttpClient
   ) { }
-
-  /**
-   * Get the headers for the API requests.
-   * @returns HttpHeaders object with the default headers.
-   * @private
-   * @memberof ApiService
-   * @since 1.0.0
-   * @version 1.0.0
-   * @example getHeaders() => HttpHeaders
-   */
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      ...environment.api.primaryHeaders,
-      // Add additional headers below
-    });
-  }
 
   /**
    * Handle the error response from the API.
@@ -58,7 +43,8 @@ export class ApiService {
    * @param server Optional server URL to override the default.
    * @returns An Observable of the response data.
    */
-  public get<T>(endpoint: string, params?: { [param: string]: string | string[] }, server: Server = this.server): Observable<T> {
+  public get<T>(endpoint: string, params?: { [param: string]: string | string[] }, server: Server = this.server): Observable<T> | null {
+    // Construct the query parameters
     let httpParams = new HttpParams();
     if (params) {
       // Construct query params from the params object
@@ -72,7 +58,18 @@ export class ApiService {
       });
     }
 
-    return this.http.get<T>(`${server.url}${server.api}${endpoint}`, { headers: this.getHeaders(), params: httpParams })
+    // Append the Key to the query params
+    httpParams = httpParams.set('appid', server.keys[endpoint]);
+
+    // Format the headers to GET method (remove Content-Type header)
+    const headers = new HttpHeaders();
+    Object.keys(server.headers).forEach(key => {
+      if (key.toLowerCase() !== 'content-type') {
+        headers.append(key, server.headers[key]);
+      }
+    });
+
+    return this.http.get<T>(`${server.url}${server.api}${endpoint}`, { headers: headers, params: httpParams })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -84,7 +81,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public post<T>(endpoint: string, data: any, server: Server = this.server): Observable<T> {
-    return this.http.post<T>(`${server.url}${server.api}${endpoint}`, data, { headers: this.getHeaders() })
+    return this.http.post<T>(`${server.url}${server.api}${endpoint}`, data, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -96,7 +93,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public put<T>(endpoint: string, data: any, server: Server = this.server): Observable<T> {
-    return this.http.put<T>(`${server.url}${server.api}${endpoint}`, data, { headers: this.getHeaders() })
+    return this.http.put<T>(`${server.url}${server.api}${endpoint}`, data, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -107,7 +104,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public delete<T>(endpoint: string, server: Server = this.server): Observable<T> {
-    return this.http.delete<T>(`${server.url}${server.api}${endpoint}`, { headers: this.getHeaders() })
+    return this.http.delete<T>(`${server.url}${server.api}${endpoint}`, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -119,7 +116,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public patch<T>(endpoint: string, data: any, server: Server = this.server): Observable<T> {
-    return this.http.patch<T>(`${server.url}${server.api}${endpoint}`, data, { headers: this.getHeaders() })
+    return this.http.patch<T>(`${server.url}${server.api}${endpoint}`, data, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -130,7 +127,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public options<T>(endpoint: string, server: Server = this.server): Observable<T> {
-    return this.http.options<T>(`${server.url}${server.api}${endpoint}`, { headers: this.getHeaders() })
+    return this.http.options<T>(`${server.url}${server.api}${endpoint}`, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 
@@ -141,7 +138,7 @@ export class ApiService {
    * @returns An Observable of the response data.
    */
   public head<T>(endpoint: string, server: Server = this.server): Observable<T> {
-    return this.http.head<T>(`${server.url}${server.api}${endpoint}`, { headers: this.getHeaders() })
+    return this.http.head<T>(`${server.url}${server.api}${endpoint}`, { headers: server.headers })
       .pipe(catchError(this.handleError<T>(endpoint)));
   }
 }
