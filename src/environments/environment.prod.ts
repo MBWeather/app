@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   api: {
     servers: {
       primary: {
@@ -23,14 +23,17 @@ export const environment = {
     name: 'MBWeather',
     version: '1.0.0',
     config: {
-      language: {
+      constants: {
+        MILLISECONDS: 1000,
+        KELVIN: 273.15
+      },
+      languages: {
         default: 'en',
-        available: ['si', 'en'],
+        available: [{short: 'si', name: "app.slovene"}, {short: 'en', name: "app.english"}],
       },
       storage: {
         keys: {
-          language: 'languages',
-          selectedLanguage: 'selectedLanguage'
+          weatherData: 'weatherData'
         }
       }
     }

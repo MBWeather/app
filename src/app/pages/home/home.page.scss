@@ -1,27 +1,26 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+:host {
+    --mbw-header-color-hex: #e86e1e;
+    --mbw-header-color-rgb: 232, 110, 30
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-header {
+    ion-toolbar {
+        --background: var(--mbw-header-color-hex, var(--mbw-header-color-rgb, #fff)) !important;
+    }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+ion-content {
+    // --background: var(--ion-color-light);
 
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+    .global-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        min-height: calc(100vh - 56px);
+        min-width: 100vw;
+        max-width: 100vw;
+    
+        overflow-x: hidden;
+    }
 }

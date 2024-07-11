@@ -43,7 +43,7 @@ export class ApiService {
    * @param server Optional server URL to override the default.
    * @returns An Observable of the response data.
    */
-  public get<T>(endpoint: string, params?: { [param: string]: string | string[] }, server: Server = this.server): Observable<T> | null {
+  public get<T>(endpoint: string, params?: { [param: string]: number | string | string[] }, server: Server = this.server): Observable<T> {
     // Construct the query parameters
     let httpParams = new HttpParams();
     if (params) {
