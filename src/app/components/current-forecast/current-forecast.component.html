@@ -1,0 +1,18 @@
+<div class="current-forecast">
+  <h2 class="title">{{ 'app.currentForecast' | translate }}</h2>
+  <div class="forecast-card">
+    <div class="weather-icon">
+      <img [src]="'https://openweathermap.org/img/wn/' + currentWeather.weather[0].icon + '@2x.png'"
+        alt="Weather Icon">
+    </div>
+    <div class="weather-details">
+      <h2>{{ currentWeather.temp - getConst.KELVIN | number: '1.0-0' }}°C</h2>
+      <p>{{ currentWeather.weather[0].description }}</p>
+      <p>{{ 'app.feelsLike' | translate }}: {{ currentWeather.feels_like - getConst.KELVIN | number:
+        '1.0-0' }}°C</p>
+      <p>{{ 'app.humidity' | translate }}: {{ currentWeather.humidity }}%</p>
+      <p>{{ 'app.wind' | translate }}: {{ currentWeather.wind_speed }} m/s</p>
+      <p>{{ 'app.pressure' | translate }}: {{ currentWeather.pressure }} hPa</p>
+    </div>
+  </div>
+</div>

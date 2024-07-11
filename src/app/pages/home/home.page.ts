@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from 'src/app/types/location';
+import * as constants from 'src/app/@mbweather/constants';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,7 @@ import { Location } from 'src/app/types/location';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  protected readonly getConst = constants;
 
   protected location: Location = {
     city: 'Maribor',
