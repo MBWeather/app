@@ -20,6 +20,7 @@ export class WeatherForcastComponent implements OnInit {
   protected readonly KELVIN: number = environment.app.config.constants.KELVIN;
   protected readonly languages: Langauges = environment.app.config.languages;
   protected readonly langRegEx: RegExp = new RegExp(`^${this.languages.available.map(lang => lang.short).join('|')}$`, 'i');
+  private readonly storageKeys: { [key: string]: string } = environment.app.config.storage.keys;
   private readonly browserLang: string = `${this.translate.getBrowserLang()}`;
 
   protected loading: boolean = true;
@@ -97,9 +98,9 @@ export class WeatherForcastComponent implements OnInit {
     // If it's not a refresh and there is data in the local storage, use it
     if (
       !isRefresh &&  // Check if it's not a refresh
-      localStorage.getItem('weatherData') &&   // Check if there is data in the local storage
-      (`${localStorage.getItem('weatherData')}`).length < 10) { // Check if the data is too small to be valid
-      this.weatherData = JSON.parse(localStorage.getItem('weatherData') || '{}');
+      localStorage.getItem(this.storageKeys['weatherData']) &&   // Check if there is data in the local storage
+      (`${localStorage.getItem(this.storageKeys['weatherData'])}`).length > 10) { // Check if the data is too small to be valid
+      this.weatherData = JSON.parse(localStorage.getItem(this.storageKeys['weatherData']) || '{}');
       return;
     }
 
@@ -113,7 +114,7 @@ export class WeatherForcastComponent implements OnInit {
           this.weatherData = response;
 
           // Save the data to local storage
-          localStorage.setItem('weatherData', JSON.stringify(response));
+          localStorage.setItem(this.storageKeys['weatherData'], JSON.stringify(response));
         },
         error: (error) => {
           console.error("An error occurred while fetching weather data:", error);
