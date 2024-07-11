@@ -6,12 +6,16 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 const PROVIDERS = [
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  { provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   provideHttpClient()
 ];
 
