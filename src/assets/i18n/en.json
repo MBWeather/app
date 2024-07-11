@@ -1,0 +1,16 @@
+{
+    "app": {
+      "lastUpdated": "Last updated",
+      "feelsLike": "Feels like",
+      "min": "Min",
+      "max": "Max",
+      "humidity": "Humidity",
+      "wind": "Wind",
+      "pressure": "Pressure",
+      "5DayForecast": "5-Day Forecast",
+      "refresh": "Refresh",
+      "english": "English",
+      "slovene": "Slovene"
+    }
+  }
+  

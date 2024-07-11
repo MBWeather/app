@@ -7,13 +7,15 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { WeatherForcastComponent } from 'src/app/components/weather-forcast/weather-forcast.component';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { TranslateModule } from '@ngx-translate/core';
 
 const IMPORTS = [
   CommonModule,
   FormsModule,
   IonicModule,
   HomePageRoutingModule,
-  BaseChartDirective
+  BaseChartDirective,
+  TranslateModule
 ];
 
 const DECLARATIONS = [HomePage, WeatherForcastComponent];

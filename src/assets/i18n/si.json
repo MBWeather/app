@@ -1,0 +1,16 @@
+{
+    "app": {
+      "lastUpdated": "Zadnja posodobitev",
+      "feelsLike": "Občutek je kot",
+      "min": "Min",
+      "max": "Max",
+      "humidity": "Vlažnost",
+      "wind": "Veter",
+      "pressure": "Pritisk",
+      "5DayForecast": "5-dnevna napoved",
+      "refresh": "Osveži",
+      "english": "Angleško",
+      "slovene": "Slovensko"
+    }
+  }
+  

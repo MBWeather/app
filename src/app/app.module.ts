@@ -6,7 +6,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const PROVIDERS = [
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -16,7 +18,14 @@ const PROVIDERS = [
 const IMPORTS = [
   BrowserModule,
   IonicModule.forRoot(),
-  AppRoutingModule
+  AppRoutingModule,
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: (http: HttpClient) => new TranslateHttpLoader(http), // This gave me a headache for a while
+      deps: [HttpClient]
+    }
+  })
 ];
 
 const DECLARATIONS = [AppComponent];

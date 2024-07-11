@@ -5,6 +5,9 @@ import { WeatherApiResponse } from 'src/app/types/weather';
 
 import { Location } from '../../types/location';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment.prod';
+import { Langauges } from 'src/app/types/langauges';
 
 @Component({
   selector: 'app-weather-forcast',
@@ -13,8 +16,11 @@ import * as moment from 'moment';
 })
 export class WeatherForcastComponent implements OnInit {
 
-  protected readonly MILLISECONDS = 1000;
-  protected readonly KELVIN = 273.15;
+  protected readonly MILLISECONDS: number = environment.app.config.constants.MILLISECONDS;
+  protected readonly KELVIN: number = environment.app.config.constants.KELVIN;
+  protected readonly languages: Langauges = environment.app.config.languages;
+  protected readonly langRegEx: RegExp = new RegExp(`^${this.languages.available.map(lang => lang.short).join('|')}$`, 'i');
+  private readonly browserLang: string = `${this.translate.getBrowserLang()}`;
 
   protected loading: boolean = true;
   protected weatherData!: WeatherApiResponse;
@@ -44,7 +50,22 @@ export class WeatherForcastComponent implements OnInit {
 
   @Input() public location!: Location;
 
-  constructor(private apiService: ApiService) { }
+  /**
+   * 
+   * @param apiService Service for fetching data from the API
+   * @param translate Service for translating text to different languages
+   */
+  constructor(
+    private apiService: ApiService,
+    private translate: TranslateService
+  ) {
+    // Available languages
+    translate.addLangs(this.languages.available.map(lang => lang.short));
+    // Set the default language
+    translate.setDefaultLang(this.languages.default);
+    // Set the language based on the browser language
+    translate.use(this.browserLang.match(this.langRegEx) ? this.browserLang : this.languages.default);
+  }
 
   public ngOnInit(): void {
     this.triggerFetchWD();
@@ -121,5 +142,9 @@ export class WeatherForcastComponent implements OnInit {
       this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * this.MILLISECONDS).toLocaleDateString());
       this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - this.KELVIN); // Convert Kelvin to Celsius
     }
+  }
+
+  protected switchLanguage(lang: string): void {
+    this.translate.use(lang);
   }
 }
