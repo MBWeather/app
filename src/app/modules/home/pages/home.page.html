@@ -7,10 +7,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="global-container">
-    <app-weather-forecast [location]="location" ></app-weather-forecast>
-  </div>
 
+  <div class="global-container">
+
+    <ng-container *ngIf="(weatherData$ | async)">
+      <app-weather-forecast [location]="location" [weatherData]="weatherData$ | async"></app-weather-forecast>
+    </ng-container>
+  </div>
 
   <app-langauge-selector></app-langauge-selector>
 </ion-content>

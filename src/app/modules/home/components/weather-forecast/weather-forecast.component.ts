@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
@@ -17,14 +17,14 @@ import { WeatherService } from 'src/app/services/weather/weather.service';
   templateUrl: './weather-forecast.component.html',
   styleUrls: ['./weather-forecast.component.scss'],
 })
-export class WeatherForcastComponent implements OnInit {
+export class WeatherForcastComponent implements OnChanges {
   protected readonly getConst = constants;
 
   protected loading: boolean = true;
-  protected weatherData!: WeatherApiResponse;
   protected lastUpdated!: Date;
 
   @Input() public location!: Location;
+  @Input() public weatherData!: WeatherApiResponse;
 
   /**
    * 
@@ -37,5 +37,10 @@ export class WeatherForcastComponent implements OnInit {
     private weatherService: WeatherService,
   ) { }
 
-  public ngOnInit(): void { }
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['weatherData'] && this.weatherData) {
+      this.loading = false;
+      this.lastUpdated = new Date();
+    }
+  }
 }

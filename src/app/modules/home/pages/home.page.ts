@@ -3,6 +3,7 @@ import { Location } from 'src/app/types/location';
 import * as constants from 'src/app/@mbweather/constants';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -21,16 +22,23 @@ export class HomePage implements OnInit {
     }
   };
 
-  constructor(
-    private weatherService: WeatherService,
-  ) {}
+  public weatherData$!: Observable<WeatherApiResponse>;
+  private subscription!: Subscription;
 
-  public ngOnInit(): void {
-    this.weatherService.getWeatherData(this.location.coordinates.lat, this.location.coordinates.lon).subscribe((data: WeatherApiResponse) => {
-      console.log("The data is:", data);
-    });
+  constructor(private weatherService: WeatherService) {
+    this.weatherData$ = this.weatherService.getWeatherData(
+      this.location.coordinates.lat, this.location.coordinates.lon
+    );
+
+    // Subscribe to the weather data
+    this.subscription = this.weatherData$.subscribe();
   }
 
+  public ngOnInit(): void { }
+
   public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
