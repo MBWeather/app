@@ -1,0 +1,41 @@
+<div class="container">
+  <ng-container *ngIf="loading; else notLoading;">
+    <div class="loader">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  </ng-container>
+
+  <ng-template #notLoading>
+    <div class="content-wrapper">
+      <div class="timestamp">
+        <h2 class="title">
+          <span>{{ location.city }}</span><br>
+          <span>{{ 'app.lastUpdated' | translate }}: {{ lastUpdated | date: 'dd.MM.yyyy \'at\' HH:mm' }}</span>
+        </h2>
+      </div>
+
+      <div class="row">
+        <app-current-forecast [currentWeather]="weatherData.current"></app-current-forecast>
+
+        <div class="forecast">
+          <h2 class="title">{{ 'app.5DayForecast' | translate }}</h2>
+          <div class="flex-container">
+            <app-daily-forecast [dailyForecast]="day" *ngFor="let day of weatherData.daily?.slice(1, 6);"></app-daily-forecast>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="chart-container">
+        <canvas baseChart
+          [data]="chartData"
+          [options]="chartOptions"
+          [type]="'line'">
+        </canvas>
+      </div> -->
+
+      <ion-button expand="full">
+        {{ 'app.refresh' | translate }}
+      </ion-button>
+    </div>
+  </ng-template>
+</div>
