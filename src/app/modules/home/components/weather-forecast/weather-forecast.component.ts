@@ -3,7 +3,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
 
-import { Location } from '../../types/location';
+import { Location } from '../../../../types/location';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';

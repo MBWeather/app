@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { filter, Observable, skip, startWith, tap } from 'rxjs';
+
+
+import { STORAGE_KEYS } from 'src/app/@mbweather/constants';
+import { ApiService } from '../api/api.service';
+
 import { WeatherApiResponse } from 'src/app/types/weather';
-import { environment } from 'src/environments/environment';
+import { WeatherForcastComponent } from 'src/app/modules/home/components/weather-forecast/weather-forecast.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WeatherService {
-  private readonly storageKeys = environment.app.config.storage.keys;
-  
-  constructor(private http: HttpClient) {}
+export class WeatherService {  
+  constructor(private apiService: ApiService) {}
 
-  getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
-    return this.http.get<WeatherApiResponse>(`3.0/onecall?lat=${lat}&lon=${lon}`);
-  }
+  public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
+    return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, {
+      lat,
+      lon
+    }).pipe(
+      startWith(
+        JSON.parse(localStorage.getItem(STORAGE_KEYS['weatherData']) || 'false')),
+        filter(
+          (data: WeatherApiResponse) => (!!data) // Check if the data is not empty
+        ),
+        skip(1),
+        tap((data: WeatherApiResponse) => this.saveToLocalStorage(data))
+      );
+    }
 
-  saveToLocalStorage(data: WeatherApiResponse): void {
-    localStorage.setItem(this.storageKeys['weatherData'], JSON.stringify(data));
-  }
-
-  getFromLocalStorage(): WeatherApiResponse | null {
-    const data = localStorage.getItem(this.storageKeys['weatherData']);
-    return data ? JSON.parse(data) : null;
+  private saveToLocalStorage(data: WeatherApiResponse): void {
+    localStorage.setItem(STORAGE_KEYS['weatherData'], JSON.stringify(data));
   }
 }

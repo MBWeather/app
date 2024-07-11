@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import { WeatherForcastComponent } from 'src/app/components/weather-forecast/weather-forecast.component';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { TranslateModule } from '@ngx-translate/core';
-import { CurrentForecastComponent } from 'src/app/components/current-forecast/current-forecast.component';
-import { DailyForecastComponent } from 'src/app/components/daily-forecast/daily-forecast.component';
+import { HomePage } from './pages/home.page';
+import { WeatherForcastComponent } from './components/weather-forecast/weather-forecast.component';
+import { CurrentForecastComponent } from './components/current-forecast/current-forecast.component';
+import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
+import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langauge-selector/langauge-selector.component';
 
 const IMPORTS = [
   CommonModule,
@@ -17,7 +18,8 @@ const IMPORTS = [
   IonicModule,
   HomePageRoutingModule,
   BaseChartDirective,
-  TranslateModule
+  TranslateModule,
+  LangaugeSelectorComponent
 ];
 
 const DECLARATIONS = [

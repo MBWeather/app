@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Fixed global header
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="global-container">
+    <app-weather-forecast [location]="location" ></app-weather-forecast>
+  </div>
+
+
+  <app-langauge-selector></app-langauge-selector>
+</ion-content>
