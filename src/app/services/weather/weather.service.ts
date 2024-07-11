@@ -17,8 +17,7 @@ export class WeatherService {
   public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
     return this.apiService.get<WeatherApiResponse>(`/3.0/onecall`, {
       lat,
-      lon,
-      appid: environment.api.servers.primary.keys['3.0/onecall']
+      lon
     }).pipe(startWith(JSON.parse(localStorage.getItem(STORAGE_KEYS['weatherData']) || '')));
   }
 
