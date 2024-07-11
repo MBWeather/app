@@ -10,12 +10,14 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { apiKeyInterceptor } from './interceptors/api-key/api-key.interceptor';
+import { errorInterceptor } from './interceptors/error/error.interceptor';
 
 const PROVIDERS = [
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   provideHttpClient(
     withInterceptors([
-      apiKeyInterceptor
+      apiKeyInterceptor,
+      errorInterceptor
     ])
   ),
 ];
