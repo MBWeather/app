@@ -10,6 +10,7 @@ import { HomePage } from './pages/home.page';
 import { WeatherForcastComponent } from './components/weather-forecast/weather-forecast.component';
 import { CurrentForecastComponent } from './components/current-forecast/current-forecast.component';
 import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
+import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langauge-selector/langauge-selector.component';
 
 const IMPORTS = [
   CommonModule,
@@ -17,7 +18,8 @@ const IMPORTS = [
   IonicModule,
   HomePageRoutingModule,
   BaseChartDirective,
-  TranslateModule
+  TranslateModule,
+  LangaugeSelectorComponent
 ];
 
 const DECLARATIONS = [
