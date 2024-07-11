@@ -1,6 +1,7 @@
 {
     "app": {
-      "lastUpdated": "Zadnja posodobitev",
+      "lastUpdated": "Zadnje pridobljeno",
+      "currentForecast": "Trenutna napoved",
       "feelsLike": "Občutek je kot",
       "min": "Min",
       "max": "Max",
@@ -9,8 +10,8 @@
       "pressure": "Pritisk",
       "5DayForecast": "5-dnevna napoved",
       "refresh": "Osveži",
-      "english": "Angleško",
-      "slovene": "Slovensko"
+      "english": "EN",
+      "slovene": "SL"
     }
   }
   
