@@ -184,7 +184,6 @@ export class WeatherForcastComponent implements OnInit {
       this.chartData.datasets[4].data = this.weatherData.daily.map(day => day.pressure / 10); // Pressure in Pa
       this.chartData.datasets[5].data = this.weatherData.daily.map(day => day.dew_point - this.KELVIN); // Convert Kelvin to Celsius
       this.chartData.datasets[6].data = this.weatherData.daily.map(day => day.uvi); // UV Index
-  
     }
   }
 
