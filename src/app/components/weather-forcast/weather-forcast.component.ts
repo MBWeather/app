@@ -20,6 +20,7 @@ export class WeatherForcastComponent implements OnInit {
   protected readonly KELVIN: number = environment.app.config.constants.KELVIN;
   protected readonly languages: Langauges = environment.app.config.languages;
   protected readonly langRegEx: RegExp = new RegExp(`^${this.languages.available.map(lang => lang.short).join('|')}$`, 'i');
+  private readonly storageKeys: { [key: string]: string } = environment.app.config.storage.keys;
   private readonly browserLang: string = `${this.translate.getBrowserLang()}`;
 
   protected loading: boolean = true;
@@ -31,6 +32,42 @@ export class WeatherForcastComponent implements OnInit {
       {
         data: [],
         label: 'Temperature',
+        fill: false,
+        borderColor: '#4bc0c0'
+      },
+      {
+        data: [],
+        label: 'Feels Like Temperature',
+        fill: false,
+        borderColor: '#ff6384'
+      },
+      {
+        data: [],
+        label: 'Humidity',
+        fill: false,
+        borderColor: '#36a2eb'
+      },
+      {
+        data: [],
+        label: 'Wind Speed',
+        fill: false,
+        borderColor: '#ffcd56'
+      },
+      {
+        data: [],
+        label: 'Pressure',
+        fill: false,
+        borderColor: '#9966ff'
+      },
+      {
+        data: [],
+        label: 'Dew Point',
+        fill: false,
+        borderColor: '#ff9f40'
+      },
+      {
+        data: [],
+        label: 'UV Index',
         fill: false,
         borderColor: '#4bc0c0'
       }
@@ -97,9 +134,9 @@ export class WeatherForcastComponent implements OnInit {
     // If it's not a refresh and there is data in the local storage, use it
     if (
       !isRefresh &&  // Check if it's not a refresh
-      localStorage.getItem('weatherData') &&   // Check if there is data in the local storage
-      (`${localStorage.getItem('weatherData')}`).length < 10) { // Check if the data is too small to be valid
-      this.weatherData = JSON.parse(localStorage.getItem('weatherData') || '{}');
+      localStorage.getItem(this.storageKeys['weatherData']) &&   // Check if there is data in the local storage
+      (`${localStorage.getItem(this.storageKeys['weatherData'])}`).length > 10) { // Check if the data is too small to be valid
+      this.weatherData = JSON.parse(localStorage.getItem(this.storageKeys['weatherData']) || '{}');
       return;
     }
 
@@ -113,7 +150,7 @@ export class WeatherForcastComponent implements OnInit {
           this.weatherData = response;
 
           // Save the data to local storage
-          localStorage.setItem('weatherData', JSON.stringify(response));
+          localStorage.setItem(this.storageKeys['weatherData'], JSON.stringify(response));
         },
         error: (error) => {
           console.error("An error occurred while fetching weather data:", error);
@@ -137,10 +174,17 @@ export class WeatherForcastComponent implements OnInit {
       console.log("No weather data available.");
       return;
     }
-
+  
     if (this.weatherData) {
       this.chartData.labels = this.weatherData.daily.map(day => new Date(day.dt * this.MILLISECONDS).toLocaleDateString());
       this.chartData.datasets[0].data = this.weatherData.daily.map(day => day.temp.day - this.KELVIN); // Convert Kelvin to Celsius
+      this.chartData.datasets[1].data = this.weatherData.daily.map(day => day.feels_like.day - this.KELVIN); // Convert Kelvin to Celsius
+      this.chartData.datasets[2].data = this.weatherData.daily.map(day => day.humidity); // Humidity in percentage
+      this.chartData.datasets[3].data = this.weatherData.daily.map(day => day.wind_speed); // Wind Speed in m/s
+      this.chartData.datasets[4].data = this.weatherData.daily.map(day => day.pressure / 10); // Pressure in Pa
+      this.chartData.datasets[5].data = this.weatherData.daily.map(day => day.dew_point - this.KELVIN); // Convert Kelvin to Celsius
+      this.chartData.datasets[6].data = this.weatherData.daily.map(day => day.uvi); // UV Index
+  
     }
   }
 

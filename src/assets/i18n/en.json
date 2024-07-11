@@ -1,6 +1,7 @@
 {
     "app": {
       "lastUpdated": "Last updated",
+      "currentForecast": "Current Forecast",
       "feelsLike": "Feels like",
       "min": "Min",
       "max": "Max",
@@ -9,8 +10,8 @@
       "pressure": "Pressure",
       "5DayForecast": "5-Day Forecast",
       "refresh": "Refresh",
-      "english": "English",
-      "slovene": "Slovene"
+      "english": "EN",
+      "slovene": "SL"
     }
   }
   
