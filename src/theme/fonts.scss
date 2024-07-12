@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYREGULAR.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYBOLD.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 700;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYHEAVYITALIC.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 300;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYLIGHTITALIC.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 900;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYBLACKITALIC.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYMEDIUM.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 600;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYSEMIBOLDITALIC.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 100;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYTHINITALIC.otf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
+  font-style: italic;
+  font-weight: 200;
+  src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYULTRALIGHTITALIC.otf");
+}
+
+/* Apply the font-family globally */
+* {
+  font-family: "SF Pro Display", sans-serif;
+}
