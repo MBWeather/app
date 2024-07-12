@@ -1,0 +1,7 @@
+$background-image: url('./../assets/icon/background.svg');
+
+ion-app {
+    background-image: $background-image;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
