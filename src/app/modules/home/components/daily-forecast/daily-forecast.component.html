@@ -1,0 +1,25 @@
+<div class="forecast-item">
+  <div class="date">{{ dailyForecast.dt * getConst.MILLISECONDS| date }}</div>
+  <div class="details">
+    <div class="block">
+      <div class="temperature">
+        <p class="text">
+          <span class="min">{{ dailyForecast.temp.min - getConst.KELVIN | number: '1.0-0' }}°C</span><br>
+          <span class="max">{{ dailyForecast.temp.max - getConst.KELVIN | number: '1.0-0' }}°C</span>
+        </p>
+      </div>
+      <div class="sun-time">
+        <p class="text">
+          <span class="sunrise">{{ dailyForecast.sunriseTime }}</span><br>
+          <span class="sunset">{{ dailyForecast.sunsetTime }}</span>
+        </p>
+      </div>
+      <!-- I could implement logic to format this description to the current language, but I believe this is a sufficient demo. Will format - if requested -->
+      <div class="condition">{{ dailyForecast.weather[0].description }}</div>
+    </div>
+    <div class="forecast-icon">
+      <img [src]="'https://openweathermap.org/img/wn/' + dailyForecast.weather[0].icon + '@2x.png'"
+        alt="Weather Icon">
+    </div>
+  </div>
+</div>

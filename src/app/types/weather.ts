@@ -70,8 +70,8 @@ export interface DailyWeather {
   pop: number;
   rain?: number;
   uvi: number;
-  sunriseTime?: string;
-  sunsetTime?: string;
+  sunriseTime?: string; // Custom property, to be formatted using moment.js
+  sunsetTime?: string; // Custom property, to be formatted using moment.js
 }
 
 export interface DailyTemperature {
