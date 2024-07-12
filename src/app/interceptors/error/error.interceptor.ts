@@ -4,6 +4,11 @@ import { ToastController } from '@ionic/angular';
 import { catchError, throwError } from 'rxjs';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
+/**
+ * Interceptor to handle errors from HTTP requests.
+ * @param req The HTTP request.
+ * @param next The next interceptor in the chain.
+ */
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastService = inject(ToastService); // Inject the toast service
 

@@ -11,7 +11,7 @@ import * as constants from 'src/app/@mbweather/constants';
 export class CurrentForecastComponent  implements OnInit {
   protected readonly getConst = constants;
 
-  @Input() public currentWeather!: CurrentWeather;
+  @Input() public currentWeather!: CurrentWeather; // The current weather data
 
   constructor() { }
 

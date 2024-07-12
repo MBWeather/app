@@ -4,13 +4,21 @@ import { WeatherApiResponse } from './../../types/weather';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
+import * as constants from './../../@mbweather/constants';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ChartService {
-  private readonly MILLISECONDS = environment.app.config.constants.MILLISECONDS;
-  private readonly KELVIN = environment.app.config.constants.KELVIN;
+  private readonly getConsts = constants;
 
+  /**
+   * Prepare the chart data for the weather data, ...
+   * @param {WeatherApiResponse} weatherData The weather data to prepare
+   * @returns {ChartData<'line'>} The prepared chart data
+   * @memberof ChartService
+   * @since 1.0.0
+   */
   public prepareChartData(weatherData: WeatherApiResponse): ChartData<'line'> {
     // If there is no data, return an empty object
     if (!weatherData.daily) return { datasets: [], labels: [] };
@@ -19,13 +27,13 @@ export class ChartService {
     return {
       datasets: [
         {
-          data: weatherData.daily.map(day => day.temp.day - this.KELVIN),
+          data: weatherData.daily.map(day => day.temp.day - this.getConsts.KELVIN),
           label: 'Temperature',
           fill: false,
           borderColor: '#4bc0c0'
         },
         {
-          data: weatherData.daily.map(day => day.feels_like.day - this.KELVIN),
+          data: weatherData.daily.map(day => day.feels_like.day - this.getConsts.KELVIN),
           label: 'Feels Like Temperature',
           fill: false,
           borderColor: '#ff6384'
@@ -49,7 +57,7 @@ export class ChartService {
           borderColor: '#9966ff'
         },
         {
-          data: weatherData.daily.map(day => day.dew_point - this.KELVIN),
+          data: weatherData.daily.map(day => day.dew_point - this.getConsts.KELVIN),
           label: 'Dew Point',
           fill: false,
           borderColor: '#ff9f40'
@@ -61,7 +69,7 @@ export class ChartService {
           borderColor: '#4bc0c0'
         }
       ],
-      labels: weatherData.daily.map(day => new Date(day.dt * this.MILLISECONDS).toLocaleDateString())
+      labels: weatherData.daily.map(day => new Date(day.dt * this.getConsts.MILLISECONDS).toLocaleDateString())
     };
   }
 }
