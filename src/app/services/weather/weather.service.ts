@@ -15,18 +15,19 @@ export class WeatherService {
   constructor(private apiService: ApiService) {}
 
   public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
-    return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, {
-      lat,
-      lon
-    }).pipe(
-      startWith(
-        JSON.parse(localStorage.getItem(STORAGE_KEYS['weatherData']) || 'false')),
-        filter(
-          (data: WeatherApiResponse) => (!!data) // Check if the data is not empty
-        ),
-        skip(1),
-        tap((data: WeatherApiResponse) => this.saveToLocalStorage(data))
-      );
+    const localData: string = `${localStorage.getItem(STORAGE_KEYS['weatherData'])}`;
+    const parsedData: WeatherApiResponse = localData ? JSON.parse(localData) : null;
+
+    return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, { lat, lon }).pipe(
+      filter((data: WeatherApiResponse): data is WeatherApiResponse => !!data), // Ensure non-null values
+      startWith(parsedData),
+      skip(1), // Skip the first emission which is the startWith value
+      tap((data: WeatherApiResponse) => {
+        if (data) {
+          this.saveToLocalStorage(data);
+        }
+      })
+    );
     }
 
   private saveToLocalStorage(data: WeatherApiResponse): void {
