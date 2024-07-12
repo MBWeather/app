@@ -1,12 +1,16 @@
+/**
+ * Weather API response types
+ * @see https://openweathermap.org/api/one-call-api
+ */
 export interface WeatherApiResponse {
   lat: number;
   lon: number;
   timezone: string;
   timezone_offset: number;
-  current: CurrentWeather;
-  minutely?: MinutelyWeather[];
-  hourly?: HourlyWeather[];
-  daily?: DailyWeather[];
+  current: CurrentWeather; // Current weather data
+  minutely?: MinutelyWeather[]; // Minute forecast weather data
+  hourly?: HourlyWeather[]; // Hourly forecast weather data
+  daily?: DailyWeather[]; // Daily forecast weather data
 }
 
 export interface CurrentWeather {
@@ -24,7 +28,7 @@ export interface CurrentWeather {
   wind_speed: number;
   wind_deg: number;
   wind_gust: number;
-  weather: WeatherCondition[];
+  weather: WeatherCondition[]; // Weather condition codes
 }
 
 export interface MinutelyWeather {
