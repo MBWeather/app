@@ -3,7 +3,7 @@ import { Location } from 'src/app/types/location';
 import * as constants from 'src/app/@mbweather/constants';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, shareReplay, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   constructor(private weatherService: WeatherService) {
     this.weatherData$ = this.weatherService.getWeatherData(
       this.location.coordinates.lat, this.location.coordinates.lon
-    );
+    ).pipe(shareReplay(1)); // Share the data between multiple subscribers, don't re-fetch the data
 
     // Subscribe to the weather data
     this.subscription = this.weatherData$.subscribe();
