@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
@@ -22,9 +22,13 @@ export class WeatherForcastComponent implements OnChanges {
 
   protected loading: boolean = true;
   protected lastUpdated!: Date;
+  protected chart!: {
+    data: ChartData<'line'>;
+    options: ChartOptions;
+  };
 
   @Input() public location!: Location;
-  @Input() public weatherData!: WeatherApiResponse;
+  @Input() public weatherData!: WeatherApiResponse | null;
 
   /**
    * 
@@ -32,15 +36,18 @@ export class WeatherForcastComponent implements OnChanges {
    * @param translate Service for translating text to different languages
    */
   constructor(
-    private apiService: ApiService,
     private chartService: ChartService,
-    private weatherService: WeatherService,
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['weatherData'] && this.weatherData) {
       this.loading = false;
       this.lastUpdated = new Date();
+
+      this.chart = {
+        data: this.chartService.prepareChartData(this.weatherData),
+        options: this.getConst.DEFAULT_CHART_OPTIONS as ChartOptions
+      }
     }
   }
 }

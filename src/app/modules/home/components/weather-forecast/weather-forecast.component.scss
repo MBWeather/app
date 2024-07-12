@@ -11,7 +11,7 @@
   padding: 16px;
 
   border: 1px solid var(--ion-color-primary);
-  
+
   max-width: 95vw;
 
   margin-top: 5rem;
@@ -26,7 +26,7 @@
 
   .timestamp {
     width: 100%;
-    
+
     .title {
       text-align: center;
       color: var(--ion-color-primary);
@@ -39,103 +39,20 @@
 
     @media (max-width: 960px) {
       display: block;
-
-      .current-forecast {
-        justify-content: center;
-        width: -webkit-fill-available;
-
-        .weather-details {
-          display: flex;
-          flex-wrap: wrap;
-          p, h2 {
-            margin: 5px;
-            padding: 5px;
-          }
-        }
-      }
     }
 
-    .current-forecast {
-      min-width: 25vw;
-      margin-bottom: 16px;
-
+    .forecast {
       .title {
         width: -webkit-fill-available;
         text-align: center;
       }
-
-      .forecast-card {
-        width: 100%;
-        max-width: 320px;
-        padding: 8px;
-        margin-top: 8px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 16px;
-        border: 1px solid var(--ion-color-primary);
-        border-radius: 8px;
-        background-color: var(--ion-color-light);
-      }
-  
-      .weather-icon {
-        img {
-          width: 100px;
-          height: 100px;
-          object-fit: none;
-        }
-      }
-  
-      .weather-details {
-        margin-left: 16px;
-      }
-    }
-  
-    .forecast {  
-      .title {
-        width: -webkit-fill-available;
-        text-align: center;
-      }
-
+    
       .flex-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-
-        .forecast-item {
-          width: 100%;
-          max-width: 320px;
-          padding: 8px;
-          margin: 8px;
-          margin-bottom: 16px;
-          border: 1px solid var(--ion-color-primary);
-          border-radius: 8px;
-          background-color: var(--ion-color-light);
-    
-          .date {
-            font-weight: bold;
-            color: var(--ion-color-primary);
-            margin-bottom: 8px;
-          }
-    
-          .details {
-            display: flex;
-            justify-content: space-between;
-   
-            .block {
-              display: block;
-            }
-  
-            .temperature {
-              color: var(--ion-color-primary);
-            }
-    
-            .condition {
-              color: var(--ion-color-dark);
-            }
-          }
-        }
       }
-    }
+    }  
   }
 
   .chart-container {

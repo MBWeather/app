@@ -11,6 +11,7 @@ import { WeatherForcastComponent } from './components/weather-forecast/weather-f
 import { CurrentForecastComponent } from './components/current-forecast/current-forecast.component';
 import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
 import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langauge-selector/langauge-selector.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 const IMPORTS = [
   CommonModule,
@@ -19,7 +20,8 @@ const IMPORTS = [
   HomePageRoutingModule,
   BaseChartDirective,
   TranslateModule,
-  LangaugeSelectorComponent
+  LangaugeSelectorComponent,
+  LineChartComponent
 ];
 
 const DECLARATIONS = [

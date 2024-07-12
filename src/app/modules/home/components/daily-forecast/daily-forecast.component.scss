@@ -1,0 +1,33 @@
+.forecast-item {
+  width: 100%;
+  max-width: 320px;
+  padding: 8px;
+  margin: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 8px;
+  background-color: var(--ion-color-light);
+
+  .date {
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    margin-bottom: 8px;
+  }
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+
+    .block {
+      display: block;
+    }
+
+    .temperature {
+      color: var(--ion-color-primary);
+    }
+
+    .condition {
+      color: var(--ion-color-dark);
+    }
+  }
+}

@@ -11,7 +11,7 @@ export class ChartService {
   private readonly MILLISECONDS = environment.app.config.constants.MILLISECONDS;
   private readonly KELVIN = environment.app.config.constants.KELVIN;
 
-  prepareChartData(weatherData: WeatherApiResponse): ChartData<'line'> {
+  public prepareChartData(weatherData: WeatherApiResponse): ChartData<'line'> {
     // If there is no data, return an empty object
     if (!weatherData.daily) return { datasets: [], labels: [] };
 
