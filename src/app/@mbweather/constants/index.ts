@@ -25,10 +25,13 @@ const langRegEx: RegExp = new RegExp(`^${LANGUAGES.available.map(lang => lang.sh
  */
 const STORAGE_KEYS = environment.app.config.storage.keys;
 
+const DEFAULT_CHART_OPTIONS = environment.app.config.chart.options;
+
 export {
   MILLISECONDS,
   KELVIN,
   LANGUAGES,
   langRegEx,
-  STORAGE_KEYS
+  STORAGE_KEYS,
+  DEFAULT_CHART_OPTIONS
 };
