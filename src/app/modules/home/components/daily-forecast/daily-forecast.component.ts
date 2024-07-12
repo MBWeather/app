@@ -11,7 +11,7 @@ import * as constants from 'src/app/@mbweather/constants';
 export class DailyForecastComponent  implements OnInit {
   protected readonly getConst = constants;
 
-  @Input() public dailyForecast!: DailyWeather;
+  @Input() public dailyForecast!: DailyWeather; // The daily forecast data
 
   constructor() { }
 
