@@ -6,13 +6,20 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http'; // This was a tricky little import until it wasn't
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { apiKeyInterceptor } from './interceptors/api-key/api-key.interceptor';
+import { errorInterceptor } from './interceptors/error/error.interceptor';
 
 const PROVIDERS = [
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-  provideHttpClient()
+  provideHttpClient(
+    withInterceptors([
+      apiKeyInterceptor,
+      errorInterceptor
+    ])
+  ),
 ];
 
 const IMPORTS = [

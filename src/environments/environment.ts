@@ -27,6 +27,17 @@ export const environment = {
     name: 'MBWeather',
     version: '1.0.0',
     config: {
+      chart: {
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            }
+          }
+        }
+      },
       constants: {
         MILLISECONDS: 1000,
         KELVIN: 273.15
