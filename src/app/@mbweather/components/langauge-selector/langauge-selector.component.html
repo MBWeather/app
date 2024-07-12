@@ -4,7 +4,7 @@
       <ion-icon name="chevron-up-circle"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button *ngFor="let language of getConst.LANGUAGES.available">
+      <ion-fab-button (click)="changeLanguage(language)" *ngFor="let language of getConst.LANGUAGES.available">
         {{ language.short| uppercase }}
       </ion-fab-button>
     </ion-fab-list>
