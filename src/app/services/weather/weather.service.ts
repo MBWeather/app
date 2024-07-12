@@ -11,8 +11,8 @@ import { WeatherForcastComponent } from 'src/app/modules/home/components/weather
 @Injectable({
   providedIn: 'root'
 })
-export class WeatherService {  
-  constructor(private apiService: ApiService) {}
+export class WeatherService {
+  constructor(private apiService: ApiService) { }
 
   public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
     const localData: string = `${localStorage.getItem(STORAGE_KEYS['weatherData'])}`;
@@ -28,7 +28,7 @@ export class WeatherService {
         }
       })
     );
-    }
+  }
 
   private saveToLocalStorage(data: WeatherApiResponse): void {
     localStorage.setItem(STORAGE_KEYS['weatherData'], JSON.stringify(data));

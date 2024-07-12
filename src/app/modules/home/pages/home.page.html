@@ -1,18 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-tab-button slot="start" (click)="changeLocation()">
+      <ion-icon name="location"></ion-icon>
+      <!-- <ion-label>Location</ion-label> -->
+    </ion-tab-button>
+
     <ion-title class="ion-text-center">
-      Fixed global header
+      MBWeather
     </ion-title>
+
+    <ion-tab-button slot="end" (click)="toggleRefresh()">
+      <ion-icon name="reload"></ion-icon>
+      <!-- <ion-label>Refresh</ion-label> -->
+    </ion-tab-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
   <div class="global-container">
-
-    <ng-container *ngIf="(weatherData$ | async)">
-      <app-weather-forecast [location]="location" [weatherData]="weatherData$ | async"></app-weather-forecast>
+    <ng-container *ngIf="loading; else weatherContent">
+      <ion-spinner name="bubbles"></ion-spinner>
     </ng-container>
+    <ng-template #weatherContent>
+      <app-weather-forecast [location]="location" [weatherData]="weatherData$ | async"></app-weather-forecast>
+    </ng-template>
   </div>
 
   <app-langauge-selector></app-langauge-selector>

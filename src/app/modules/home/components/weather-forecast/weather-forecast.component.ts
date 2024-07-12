@@ -20,7 +20,6 @@ import { WeatherService } from 'src/app/services/weather/weather.service';
 export class WeatherForcastComponent implements OnChanges {
   protected readonly getConst = constants;
 
-  protected loading: boolean = true;
   protected lastUpdated!: Date;
   protected chart!: {
     data: ChartData<'line'>;
@@ -41,7 +40,6 @@ export class WeatherForcastComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['weatherData'] && this.weatherData) {
-      this.loading = false;
       this.lastUpdated = new Date();
 
       this.chart = {

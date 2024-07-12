@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import * as constants from 'src/app/@mbweather/constants';
+import { Language } from 'src/app/types/langauges';
 
 @Component({
   selector: 'app-langauge-selector',
@@ -14,8 +16,13 @@ import * as constants from 'src/app/@mbweather/constants';
 export class LangaugeSelectorComponent  implements OnInit {
   protected readonly getConst = constants;
 
-  constructor() { }
+  constructor(
+    private translate: TranslateService
+  ) { }
 
-  ngOnInit() {}
+  public ngOnInit(): void {}
 
+  protected changeLanguage(lang: Language): void {
+    this.translate.use(lang.short);
+  }
 }
