@@ -15,6 +15,11 @@ export class ApiService {
     keys: environment.api.servers.primary.keys
   };
 
+  /**
+   * Creates an instance of ApiService.
+   * @param {HttpClient} http
+   * @memberof ApiService
+   */
   constructor(
     private http: HttpClient
   ) { }
