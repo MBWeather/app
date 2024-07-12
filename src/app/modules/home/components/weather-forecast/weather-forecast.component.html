@@ -4,7 +4,7 @@
       <div class="timestamp">
         <h2 class="title">
           <span>{{ location.city }}</span><br>
-          <span>{{ 'app.lastUpdated' | translate }}: {{ lastUpdated | date: 'dd.MM.yyyy \'at\' HH:mm' }}</span>
+          <span>{{ 'app.lastUpdated' | translate }}: {{ lastUpdated | date: 'dd.MM.yyyy' }} {{ 'app.at' | translate }} {{ lastUpdated | date: 'HH:mm' }}</span>
         </h2>
       </div>
 
