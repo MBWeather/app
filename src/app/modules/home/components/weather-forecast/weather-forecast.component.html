@@ -1,0 +1,34 @@
+<div class="container">
+  <ng-container #notLoading>
+    <div class="content-wrapper">
+      <div class="timestamp">
+        <h2 class="title">
+          <span>{{ location.city }}</span><br>
+          <span>{{ 'app.lastUpdated' | translate }}: {{ lastUpdated | date: 'dd.MM.yyyy' }} {{ 'app.at' | translate }} {{ lastUpdated | date: 'HH:mm' }}</span>
+        </h2>
+      </div>
+
+      <div class="row">
+        <!-- If instructed, implement sceletons -->
+        <app-current-forecast [currentWeather]="weatherData.current"></app-current-forecast>
+
+        <div class="forecast">
+          <h2 class="title">{{ 'app.5DayForecast' | translate }}</h2>
+          <div class="flex-container">
+            <!-- If instructed, implement sceletons -->
+            <app-daily-forecast class="m-1" [dailyForecast]="day" *ngFor="let day of weatherData.daily?.slice(1, 6);"></app-daily-forecast>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <!-- If instructed, implement sceletons -->
+        <app-line-chart [chartData]="chart.data" [chartOptions]="chart.options"></app-line-chart>
+      </div>
+
+      <ion-button expand="full">
+        {{ 'app.refresh' | translate }}
+      </ion-button>
+    </div>
+  </ng-container>
+</div>
