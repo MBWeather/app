@@ -27,11 +27,21 @@ const STORAGE_KEYS = environment.app.config.storage.keys;
 
 const DEFAULT_CHART_OPTIONS = environment.app.config.chart.options;
 
+const DEFAULT_LOCATION = {
+  city: 'Maribor',
+  country: 'Slovenia',
+  coordinates: {
+    lat: 46.5547,
+    lon: 15.6459
+  }
+};
+
 export {
   MILLISECONDS,
   KELVIN,
   LANGUAGES,
   langRegEx,
   STORAGE_KEYS,
-  DEFAULT_CHART_OPTIONS
+  DEFAULT_CHART_OPTIONS,
+  DEFAULT_LOCATION
 };

@@ -1,11 +1,5 @@
 <div class="container">
-  <ng-container *ngIf="loading; else notLoading;">
-    <div class="loader">
-      <ion-spinner name="crescent"></ion-spinner>
-    </div>
-  </ng-container>
-
-  <ng-template #notLoading>
+  <ng-container #notLoading>
     <div class="content-wrapper">
       <div class="timestamp">
         <h2 class="title">
@@ -33,5 +27,5 @@
         {{ 'app.refresh' | translate }}
       </ion-button>
     </div>
-  </ng-template>
+  </ng-container>
 </div>

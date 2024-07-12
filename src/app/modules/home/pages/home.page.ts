@@ -3,7 +3,7 @@ import { Location } from 'src/app/types/location';
 import * as constants from 'src/app/@mbweather/constants';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
-import { Observable, shareReplay, Subscription } from 'rxjs';
+import { Observable, shareReplay, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,32 +13,54 @@ import { Observable, shareReplay, Subscription } from 'rxjs';
 export class HomePage implements OnInit {
   protected readonly getConst = constants;
 
-  protected location: Location = {
-    city: 'Maribor',
-    country: 'Slovenia',
-    coordinates: {
-      lat: 46.5547,
-      lon: 15.6459
-    }
-  };
+  protected loading: boolean = true;
+  protected location: Location = this.getConst.DEFAULT_LOCATION;
 
   public weatherData$!: Observable<WeatherApiResponse>;
   private subscription!: Subscription;
 
   constructor(private weatherService: WeatherService) {
-    this.weatherData$ = this.weatherService.getWeatherData(
-      this.location.coordinates.lat, this.location.coordinates.lon
-    ).pipe(shareReplay(1)); // Share the data between multiple subscribers, don't re-fetch the data
-
-    // Subscribe to the weather data
-    this.subscription = this.weatherData$.subscribe();
+    this.getWeatherData();
   }
 
   public ngOnInit(): void { }
 
   public ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  protected toggleRefresh(): void {
+    // Unsubscribe from the weather data
+    this.unsubscribe();
+
+    // Re-fetch the data
+    this.getWeatherData();
+  }
+
+  protected changeLocation(): void {
+    /**
+     * TODO: Implement cool location change feature
+     **/ 
+  }
+
+  private unsubscribe(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  private getWeatherData(): void {
+    // Show the loading spinner
+    this.loading = true;
+    
+    // Fetch the weather data
+    this.weatherData$ = this.weatherService.getWeatherData(
+      this.location.coordinates.lat, this.location.coordinates.lon
+    ).pipe(shareReplay(1)).pipe(
+      tap(() => this.loading = false) // Hide the loading spinner
+    ); // Share the data between multiple subscribers, don't re-fetch the data
+
+    // Subscribe to the weather data
+    this.subscription = this.weatherData$.subscribe();
   }
 }
