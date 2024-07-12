@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
-import { filter, Observable, skip, startWith, tap } from 'rxjs';
+import { filter, Observable, skip, startWith, takeUntil, tap } from 'rxjs';
 
 
-import { STORAGE_KEYS } from 'src/app/@mbweather/constants';
+import { MILLISECONDS, STORAGE_KEYS } from 'src/app/@mbweather/constants';
 import { ApiService } from '../api/api.service';
 
 import { WeatherApiResponse } from 'src/app/types/weather';
-import { WeatherForcastComponent } from 'src/app/modules/home/components/weather-forecast/weather-forecast.component';
 
+import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  constructor(private apiService: ApiService) { }
+  private unsubscribe$ = new Subject<void>();
+
+  constructor(
+    private apiService: ApiService,
+    private translate: TranslateService
+  ) { }
 
   /**
    *  Get the weather data for the specified latitude and longitude.
@@ -30,6 +38,19 @@ export class WeatherService {
       skip(1), // Skip the first emission which is the startWith value
       tap((data: WeatherApiResponse) => {
         if (data) {
+          // Append custom properties to the weather data
+          data.daily.forEach((daily) => {
+
+            this.translate.get('app.at').pipe(
+              takeUntil(this.unsubscribe$)
+            ).subscribe((atTranslation: string) => {
+              // Format to 21.10.2018 ob 13:25
+              daily.sunriseTime = moment(daily.sunrise * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
+              daily.sunsetTime = moment(daily.sunset * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
+            });
+          });
+
+          // Append the weather data to local storage
           this.saveToLocalStorage(data);
         }
       })

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartData } from 'chart.js';
 import { WeatherApiResponse } from './../../types/weather';
-import * as moment from 'moment';
-import { environment } from 'src/environments/environment';
 
 import * as constants from './../../@mbweather/constants';
 
