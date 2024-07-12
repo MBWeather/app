@@ -6,7 +6,7 @@
         alt="Weather Icon">
     </div>
     <div class="weather-details">
-      <h2>{{ currentWeather.temp - getConst.KELVIN | number: '1.0-0' }}°C</h2>
+      <h2>{{ (currentWeather.temp - getConst.KELVIN | number: '1.0-0') }}°C</h2>
       <p>{{ currentWeather.weather[0].description }}</p>
       <p>{{ 'app.feelsLike' | translate }}: {{ currentWeather.feels_like - getConst.KELVIN | number:
         '1.0-0' }}°C</p>

@@ -24,7 +24,7 @@ export class WeatherForcastComponent implements OnChanges {
   protected lastUpdated!: Date;
 
   @Input() public location!: Location;
-  @Input() public weatherData!: WeatherApiResponse;
+  @Input() public weatherData!: WeatherApiResponse | null;
 
   /**
    * 
