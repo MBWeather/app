@@ -1,10 +1,16 @@
-import { HttpInterceptorFn, HttpParams } from '@angular/common/http';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
+/**
+ * Interceptor to add the API key to the request
+ * @param req The request to intercept
+ * @param next The next interceptor in the chain
+ * @returns The response from the next interceptor
+ */
 export const apiKeyInterceptor: HttpInterceptorFn = (req, next) => {
   const KEYS: {
     [key: string]: string;
-  } = environment.api.servers.primary.keys;
+  } = environment.api.servers.primary.keys; // All the keys for the primary server
 
   const url = req.url;
 

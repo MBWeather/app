@@ -19,16 +19,36 @@ export class HomePage implements OnInit {
   public weatherData$!: Observable<WeatherApiResponse>;
   private subscription!: Subscription;
 
+  /**
+   * Creates an instance of HomePage.
+   * @param weatherService The weather service
+   * @memberof HomePage
+   */
   constructor(private weatherService: WeatherService) {
     this.getWeatherData();
   }
 
+  /**
+   * Initialize the component.
+   * @public
+   * @returns void
+   */
   public ngOnInit(): void { }
 
+  /**
+   * Unsubscribe from the weather data, on component destroy.
+   * @public
+   * @returns void
+   */
   public ngOnDestroy(): void {
     this.unsubscribe();
   }
 
+  /**
+   * Toggle the refresh of the weather data.
+   * @protected
+   * @returns void
+   */
   protected toggleRefresh(): void {
     // Unsubscribe from the weather data
     this.unsubscribe();
@@ -37,18 +57,34 @@ export class HomePage implements OnInit {
     this.getWeatherData();
   }
 
+  /**
+   * Change the location of the weather data.
+   * @todo Implement cool location change feature
+   * @protected
+   * @returns void
+   */
   protected changeLocation(): void {
     /**
      * TODO: Implement cool location change feature
      **/ 
   }
 
+  /**
+   * Unsubscribe from the weather data.
+   * @private
+   * @returns void
+   */
   private unsubscribe(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
+  /**
+   * Get the weather data.
+   * @private
+   * @returns void
+   */
   private getWeatherData(): void {
     // Show the loading spinner
     this.loading = true;

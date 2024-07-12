@@ -13,8 +13,8 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class LineChartComponent implements OnInit {
 
-  @Input() public chartData: ChartData;
-  @Input() public chartOptions: ChartOptions;
+  @Input() public chartData: ChartData; // The data for the chart
+  @Input() public chartOptions: ChartOptions; // The options for the chart
 
   constructor() { }
 

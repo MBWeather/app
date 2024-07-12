@@ -21,13 +21,22 @@ export class WeatherForcastComponent implements OnChanges {
   protected readonly getConst = constants;
 
   protected lastUpdated!: Date;
+
+  /**
+   * The chart data
+   * @protected
+   * @type {{
+   *    data: ChartData<'line'>;
+   *    options: ChartOptions;
+   * }}
+   */
   protected chart!: {
     data: ChartData<'line'>;
     options: ChartOptions;
   };
 
-  @Input() public location!: Location;
-  @Input() public weatherData!: WeatherApiResponse | null;
+  @Input() public location!: Location; // The location of the weather data
+  @Input() public weatherData!: WeatherApiResponse | null; // The weather data to display
 
   /**
    * 
@@ -38,6 +47,11 @@ export class WeatherForcastComponent implements OnChanges {
     private chartService: ChartService,
   ) { }
 
+  /**
+   * On changes to the weather data, prepare the chart data
+   * @param changes The changes to the input data
+   * @returns void
+   */
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['weatherData'] && this.weatherData) {
       this.lastUpdated = new Date();

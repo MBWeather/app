@@ -14,6 +14,12 @@ import { WeatherForcastComponent } from 'src/app/modules/home/components/weather
 export class WeatherService {
   constructor(private apiService: ApiService) { }
 
+  /**
+   *  Get the weather data for the specified latitude and longitude.
+   * @param lat The latitude 
+   * @param lon The longitude
+   * @returns An Observable of the weather data.
+   */
   public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
     const localData: string = `${localStorage.getItem(STORAGE_KEYS['weatherData'])}`;
     const parsedData: WeatherApiResponse = localData ? JSON.parse(localData) : null;
@@ -30,6 +36,11 @@ export class WeatherService {
     );
   }
 
+  /**
+   * Save the weather data to local storage.
+   * @param data The weather data to save.
+   * @private
+   */
   private saveToLocalStorage(data: WeatherApiResponse): void {
     localStorage.setItem(STORAGE_KEYS['weatherData'], JSON.stringify(data));
   }
