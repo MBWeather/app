@@ -1,2 +1,21 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+    /** weather primary **/
+    --ion-color-weather-primary: #48319D;
+    --ion-color-weather-primary-rgb: 72,49,157;
+    --ion-color-weather-primary-contrast: #ffffff;
+    --ion-color-weather-primary-contrast-rgb: 255,255,255;
+    --ion-color-weather-primary-shade: #3f2b8a;
+    --ion-color-weather-primary-tint: #5a46a7;
+}
+
+.ion-color-weather-primary {
+	--ion-color-base: var(--ion-color-weather-primary);
+	--ion-color-base-rgb: var(--ion-color-weather-primary-rgb);
+	--ion-color-contrast: var(--ion-color-weather-primary-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-weather-primary-contrast-rgb);
+	--ion-color-shade: var(--ion-color-weather-primary-shade);
+	--ion-color-tint: var(--ion-color-weather-primary-tint);
+}
