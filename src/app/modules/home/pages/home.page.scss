@@ -8,8 +8,6 @@ ion-header {
 
 ion-content {
     --background: transparent;
-    --offset-top: 0;
-    --offset-bottom: 0;
 
     overflow: hidden;
 
@@ -23,6 +21,10 @@ ion-content {
             transform: translateX(-50%);
             width: 100vw;
             height: 75vh;
+
+            @media (min-width: 450px) {
+                height: 66vh;                
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-title>{{ (weatherData$ | async).daily[0].dt * getConst.MILLISECONDS | date  }}</ion-title>
+  <ion-title *ngIf="(weatherData$ | async)?.daily?.[0]">{{ (weatherData$ | async).daily[0]?.dt * getConst.MILLISECONDS | date }}</ion-title>
 </ion-header>
 <ion-content [fullscreen]="true">
   
@@ -14,13 +14,13 @@
       </h2>
       <div class="current-weather">
         <div>
-          <ion-text class="temperature">{{ (weatherData$ | async).current.temp - getConst.KELVIN | number: '1.0-0' }}&#176;C</ion-text>
+          <ion-text  *ngIf="(weatherData$ | async)?.current?.temp" class="temperature">{{ (weatherData$ | async).current.temp - getConst.KELVIN | number: '1.0-0' }}&#176;C</ion-text>
         </div>
         <div>
-          <ion-text class="description">{{ (weatherData$ | async).current.weather[0].description | titlecase }}</ion-text>
+          <ion-text *ngIf="(weatherData$ | async)?.current?.weather?.[0]?.description" class="description">{{ (weatherData$ | async).current.weather[0].description | titlecase }}</ion-text>
         </div>
         <div>
-          <ion-text class="temp-range">H: {{ (weatherData$ | async).daily[0].temp.max - getConst.KELVIN | number: '1.0-0'  }}&#176; L:{{ (weatherData$ | async).daily[0].temp.min - getConst.KELVIN | number: '1.0-0'  }}&#176;</ion-text>
+          <ion-text *ngIf="(weatherData$ | async)?.daily?.[0]" class="temp-range">H: {{ (weatherData$ | async).daily[0]?.temp.max - getConst.KELVIN | number: '1.0-0'  }}&#176; L:{{ (weatherData$ | async).daily[0].temp.min - getConst.KELVIN | number: '1.0-0'  }}&#176;</ion-text>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
         <swiper-container #swiper [slidesPerView]="1">
           <swiper-slide>
             <div class="row">
-              <div *ngFor="let forecast of ((weatherData$ | async).hourly | slice:0:7)" class="col">
+              <div *ngFor="let forecast of ((weatherData$ | async)?.hourly | slice:0:7)" class="col">
                 <div class="forecast-item">
                   <div class="forecast-item-content">
                     <ion-text class="forecast-item-text">{{forecast.dt * getConst.MILLISECONDS| date: 'HH a'
@@ -70,7 +70,7 @@
           </swiper-slide>
           <swiper-slide>
             <div class="row">
-              <div *ngFor="let forecast of ((weatherData$ | async).daily | slice:0:7)" class="col">
+              <div *ngFor="let forecast of ((weatherData$ | async)?.daily | slice:0:7)" class="col">
                 <div class="forecast-item">
                   <div class="forecast-item-content">
                     <ion-text class="forecast-item-text">{{(forecast.dt * getConst.MILLISECONDS | date: 'EEE') |
@@ -104,8 +104,8 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons>
-      <ion-button class="btn-light-round">
-        <ion-icon slot="icon-only" name="add-sharp" color="weather-primary" style="scale: 1.5;"></ion-icon>
+      <ion-button (click)="toggleRefresh()" class="btn-light-round">
+        <ion-icon slot="icon-only" name="reload-sharp" color="weather-primary" style="scale: 1.5;"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
