@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { CurrentForecastComponent } from './components/current-forecast/current-
 import { DailyForecastComponent } from './components/daily-forecast/daily-forecast.component';
 import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langauge-selector/langauge-selector.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { IonicPullupModule } from 'ionic-pullup';
 
 const IMPORTS = [
   CommonModule,
@@ -21,7 +22,8 @@ const IMPORTS = [
   BaseChartDirective,
   TranslateModule,
   LangaugeSelectorComponent,
-  LineChartComponent
+  LineChartComponent,
+  IonicPullupModule
 ];
 
 const DECLARATIONS = [
@@ -38,6 +40,7 @@ const PROVIDERS = [
 @NgModule({
   imports: IMPORTS,
   declarations: DECLARATIONS,
-  providers: PROVIDERS
+  providers: PROVIDERS,
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class HomePageModule {}
