@@ -152,6 +152,10 @@ lib-ionic-pullup {
                     background-color: transparent;
                 }
 
+                @media (min-width: 450px) {
+                    justify-content: center;
+                }
+
                 .col {
                     .forecast-item {
                         background: #4F3D73;

@@ -4,4 +4,9 @@ ion-app {
     background-image: $background-image;
     background-size: cover;
     background-repeat: no-repeat;
+
+    @media (min-width: 450px) {
+        background-size: contain;
+        background-repeat: repeat;
+    }
 }
