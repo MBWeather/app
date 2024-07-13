@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, Observable, skip, startWith, takeUntil, tap } from 'rxjs';
+import { filter, Observable, of, skip, startWith, takeUntil, tap } from 'rxjs';
 
 
 import { MILLISECONDS, STORAGE_KEYS } from 'src/app/@mbweather/constants';
@@ -32,29 +32,31 @@ export class WeatherService {
     const localData: string = `${localStorage.getItem(STORAGE_KEYS['weatherData'])}`;
     const parsedData: WeatherApiResponse = localData ? JSON.parse(localData) : null;
 
-    return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, { lat, lon }).pipe(
-      filter((data: WeatherApiResponse): data is WeatherApiResponse => !!data), // Ensure non-null values
-      startWith(parsedData),
-      skip(1), // Skip the first emission which is the startWith value
-      tap((data: WeatherApiResponse) => {
-        if (data) {
-          // Append custom properties to the weather data
-          data.daily.forEach((daily) => {
+    // return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, { lat, lon }).pipe(
+    //   filter((data: WeatherApiResponse): data is WeatherApiResponse => !!data), // Ensure non-null values
+    //   startWith(parsedData),
+    //   skip(1), // Skip the first emission which is the startWith value
+    //   tap((data: WeatherApiResponse) => {
+    //     if (data) {
+    //       // Append custom properties to the weather data
+    //       data.daily.forEach((daily) => {
 
-            this.translate.get('app.at').pipe(
-              takeUntil(this.unsubscribe$)
-            ).subscribe((atTranslation: string) => {
-              // Format to 21.10.2018 ob 13:25
-              daily.sunriseTime = moment(daily.sunrise * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
-              daily.sunsetTime = moment(daily.sunset * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
-            });
-          });
+    //         this.translate.get('app.at').pipe(
+    //           takeUntil(this.unsubscribe$)
+    //         ).subscribe((atTranslation: string) => {
+    //           // Format to 21.10.2018 ob 13:25
+    //           daily.sunriseTime = moment(daily.sunrise * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
+    //           daily.sunsetTime = moment(daily.sunset * MILLISECONDS).format(`DD.MM.YYYY ${atTranslation} HH:mm`);
+    //         });
+    //       });
 
-          // Append the weather data to local storage
-          this.saveToLocalStorage(data);
-        }
-      })
-    );
+    //       // Append the weather data to local storage
+    //       this.saveToLocalStorage(data);
+    //     }
+    //   })
+    // );
+    
+    return of(parsedData);
   }
 
   /**

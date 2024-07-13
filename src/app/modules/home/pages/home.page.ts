@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Location } from 'src/app/types/location';
 import * as constants from 'src/app/@mbweather/constants';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
 import { Observable, shareReplay, Subscription, tap } from 'rxjs';
+import { IonPullUpFooterState } from 'ionic-pullup';
+
+import { register } from 'swiper/element/bundle';
+import Swiper from 'swiper';
+
+register();
 
 @Component({
   selector: 'app-home',
@@ -33,7 +39,13 @@ export class HomePage implements OnInit {
    * @public
    * @returns void
    */
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    this.pullUpState = IonPullUpFooterState.Collapsed;
+  }
+
+  public ngAfterViewInit(): void {
+    this.swiperReady();
+  }
 
   /**
    * Unsubscribe from the weather data, on component destroy.
@@ -66,7 +78,7 @@ export class HomePage implements OnInit {
   protected changeLocation(): void {
     /**
      * TODO: Implement cool location change feature
-     **/ 
+     **/
   }
 
   /**
@@ -88,7 +100,7 @@ export class HomePage implements OnInit {
   private getWeatherData(): void {
     // Show the loading spinner
     this.loading = true;
-    
+
     // Fetch the weather data
     this.weatherData$ = this.weatherService.getWeatherData(
       this.location.coordinates.lat, this.location.coordinates.lon
@@ -98,5 +110,65 @@ export class HomePage implements OnInit {
 
     // Subscribe to the weather data
     this.subscription = this.weatherData$.subscribe();
+  }
+
+  protected pullUpState: IonPullUpFooterState;
+
+  @ViewChild('swiper')
+  private swiperRef: ElementRef | undefined;
+  private swiper?: Swiper;
+
+  /**
+  * Toggle the footer.
+  * @protected
+  * @returns void
+  */
+  protected toggleDrawer(): void {
+    this.pullUpState = this.pullUpState === IonPullUpFooterState.Collapsed ? IonPullUpFooterState.Expanded : IonPullUpFooterState.Collapsed;
+  }
+
+  /**
+   * Swiper ready event.
+   * @private
+   * @returns void
+   */
+  private swiperReady(): void {
+    this.swiper = this.swiperRef.nativeElement.swiper;
+  }
+
+  /**
+   * Slide to the hourly forecast.
+   * @protected
+   * @returns void
+   */
+  protected hourlyForecast(): void {
+    this.swiper.slideTo(0);
+  }
+
+  /**
+   * Slide to the weekly forecast.
+   * @protected
+   * @returns void
+   */
+  protected weeklyForecast(): void {
+    this.swiper.slideTo(1);
+  }
+
+  /**
+   * Toggle the menu.
+   * @protected
+   * @returns void
+   */
+  protected toggleMenu(): void {
+    console.log("Menu clicked");
+  }
+
+  /**
+   * Toggle the location.
+   * @protected
+   * @returns void
+   */
+  protected toggleLocation(): void {
+    console.log("Toggle Location");
   }
 }

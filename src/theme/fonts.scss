@@ -49,6 +49,13 @@
 
 @font-face {
   font-family: "SF Pro Display";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./../assets/fonts/sf-pro-display/SFProDisplay-Thin.ttf");
+}
+
+@font-face {
+  font-family: "SF Pro Display";
   font-style: italic;
   font-weight: 100;
   src: url("./../assets/fonts/sf-pro-display/SFPRODISPLAYTHINITALIC.otf");

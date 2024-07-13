@@ -1,31 +1,117 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-tab-button slot="start" (click)="changeLocation()">
-      <ion-icon name="location"></ion-icon>
-      <!-- <ion-label>Location</ion-label> -->
-    </ion-tab-button>
-
-    <ion-title class="ion-text-center">
-      MBWeather
-    </ion-title>
-
-    <ion-tab-button slot="end" (click)="toggleRefresh()">
-      <ion-icon name="reload"></ion-icon>
-      <!-- <ion-label>Refresh</ion-label> -->
-    </ion-tab-button>
-  </ion-toolbar>
+<ion-header>
+  <ion-title>{{ (weatherData$ | async).daily[0].dt * getConst.MILLISECONDS | date  }}</ion-title>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-
-  <div class="global-container">
-    <ng-container *ngIf="loading; else weatherContent">
-      <ion-spinner name="bubbles"></ion-spinner>
-    </ng-container>
-    <ng-template #weatherContent>
-      <app-weather-forecast [location]="location" [weatherData]="weatherData$ | async"></app-weather-forecast>
-    </ng-template>
+  
+  <div class="bg-wrapper">
+      <ion-icon slot="icon-only" src="./../../../../assets/icon/house.svg"></ion-icon>
   </div>
 
-  <app-langauge-selector></app-langauge-selector>
+  <div class="container pos-absolute">
+    <div class="current-wrapper">
+      <h2 class="location">
+        {{ location.city }}
+      </h2>
+      <div class="current-weather">
+        <div>
+          <ion-text class="temperature">{{ (weatherData$ | async).current.temp - getConst.KELVIN | number: '1.0-0' }}&#176;C</ion-text>
+        </div>
+        <div>
+          <ion-text class="description">{{ (weatherData$ | async).current.weather[0].description | titlecase }}</ion-text>
+        </div>
+        <div>
+          <ion-text class="temp-range">H: {{ (weatherData$ | async).daily[0].temp.max - getConst.KELVIN | number: '1.0-0'  }}&#176; L:{{ (weatherData$ | async).daily[0].temp.min - getConst.KELVIN | number: '1.0-0'  }}&#176;</ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ion-content>
+
+<lib-ionic-pullup [(state)]="pullUpState" [toolbarTopMargin]="1" [minBottomVisible]="250">
+
+  <ion-toolbar #ionDragFooter>
+    <ion-buttons>
+      <ion-button (click)="toggleDrawer()" class="btn-pull-up">
+        <ion-icon slot="icon-only" name="remove-sharp" color="weather-primary" style="scale: 1.5;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-segment mode="ios" value="public">
+      <ion-segment-button color="transparent" (click)="hourlyForecast()" value="public">
+        <ion-label>Hourly Forecast</ion-label>
+      </ion-segment-button>
+      <ion-segment-button color="transparent" (click)="weeklyForecast()" value="private">
+        <ion-label>Weekly Forecast</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-content>
+    <ng-container class="forecast-wrapper">
+      <div class="forecast-content-wrapper">
+        <swiper-container #swiper [slidesPerView]="1">
+          <swiper-slide>
+            <div class="row">
+              <div *ngFor="let forecast of ((weatherData$ | async).hourly | slice:0:7)" class="col">
+                <div class="forecast-item">
+                  <div class="forecast-item-content">
+                    <ion-text class="forecast-item-text">{{forecast.dt * getConst.MILLISECONDS| date: 'HH a'
+                      }}</ion-text>
+                  </div>
+                  <div class="forecast-item-icon">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                  </div>
+                  <div class="forecast-item-content">
+                    <ion-text class="forecast-item-text">{{ forecast.temp - getConst.KELVIN | number: '1.0-0' }}
+                      &#176;C</ion-text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+          <swiper-slide>
+            <div class="row">
+              <div *ngFor="let forecast of ((weatherData$ | async).daily | slice:0:7)" class="col">
+                <div class="forecast-item">
+                  <div class="forecast-item-content">
+                    <ion-text class="forecast-item-text">{{(forecast.dt * getConst.MILLISECONDS | date: 'EEE') |
+                      uppercase }}</ion-text>
+                  </div>
+                  <div class="forecast-item-icon">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                  </div>
+                  <div class="forecast-item-content">
+                    <ion-text class="forecast-item-text">{{ forecast.temp.max - getConst.KELVIN | number: '1.0-0' }}
+                      &#176;C</ion-text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="pullUpState">
+      expanded content shown now here...
+    </ng-container>
+  </ion-content>
+</lib-ionic-pullup>
+
+<ion-footer>
+  <ion-toolbar background="transparent">
+    <ion-buttons slot="start">
+      <ion-button (click)="toggleLocation()">
+        <ion-icon slot="icon-only" name="pin-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-button class="btn-light-round">
+        <ion-icon slot="icon-only" name="add-sharp" color="weather-primary" style="scale: 1.5;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleMenu()">
+        <ion-icon slot="icon-only" name="menu-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
