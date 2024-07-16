@@ -29,13 +29,13 @@ export class WeatherService {
    * @returns An Observable of the weather data.
    */
   public getWeatherData(lat: number, lon: number): Observable<WeatherApiResponse> {
-    const localData: string = `${localStorage.getItem(STORAGE_KEYS['weatherData'])}`;
+    const storageKey = `${STORAGE_KEYS['weatherData']}_${lat}_${lon}`;
+    const localData: string = `${localStorage.getItem(storageKey)}`;
     const parsedData: WeatherApiResponse = localData ? JSON.parse(localData) : null;
 
     return this.apiService.get<WeatherApiResponse>(`3.0/onecall`, { lat, lon }).pipe(
       filter((data: WeatherApiResponse): data is WeatherApiResponse => !!data), // Ensure non-null values
       startWith(parsedData),
-      skip(1), // Skip the first emission which is the startWith value
       tap((data: WeatherApiResponse) => {
         if (data) {
           // Append custom properties to the weather data
@@ -51,10 +51,11 @@ export class WeatherService {
           });
 
           // Append the weather data to local storage
-          this.saveToLocalStorage(data);
+          this.saveToLocalStorage(data, lat, lon);
         }
       })
     );
+
   }
 
   /**
@@ -62,7 +63,8 @@ export class WeatherService {
    * @param data The weather data to save.
    * @private
    */
-  private saveToLocalStorage(data: WeatherApiResponse): void {
-    localStorage.setItem(STORAGE_KEYS['weatherData'], JSON.stringify(data));
+  private saveToLocalStorage(data: WeatherApiResponse, lat: number, lon: number): void {
+    const storageKey = `${STORAGE_KEYS['weatherData']}_${lat}_${lon}`;
+    localStorage.setItem(storageKey, JSON.stringify(data));
   }
 }
