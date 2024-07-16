@@ -24,6 +24,7 @@ export class WeatherService {
 
   /**
    *  Get the weather data for the specified latitude and longitude.
+   * NOTE: I will do further work on this logic, its late now.
    * @param lat The latitude 
    * @param lon The longitude
    * @returns An Observable of the weather data.
@@ -60,6 +61,7 @@ export class WeatherService {
 
   /**
    * Save the weather data to local storage.
+   * NOTE: I will do further work on this logic, its late now.
    * @param data The weather data to save.
    * @private
    */

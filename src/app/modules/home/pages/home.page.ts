@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
 
   /**
    * Creates an instance of HomePage.
+   * NOTE: I will do further work on this logic, its late now.
    * @param weatherService The weather service
    * @memberof HomePage
    */
