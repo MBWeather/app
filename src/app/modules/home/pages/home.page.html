@@ -19,7 +19,7 @@
 <ion-content [fullscreen]="true">
 
   <div class="global-container">
-    <ng-container *ngIf="loading; else weatherContent">
+    <ng-container *ngIf="loading$ | async; else weatherContent">
       <ion-spinner name="bubbles"></ion-spinner>
     </ng-container>
     <ng-template #weatherContent>

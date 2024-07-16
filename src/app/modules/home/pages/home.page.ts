@@ -3,7 +3,7 @@ import { Location } from 'src/app/types/location';
 import * as constants from 'src/app/@mbweather/constants';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { WeatherApiResponse } from 'src/app/types/weather';
-import { Observable, shareReplay, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, Subject, Subscription, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +13,13 @@ import { Observable, shareReplay, Subscription, tap } from 'rxjs';
 export class HomePage implements OnInit {
   protected readonly getConst = constants;
 
-  protected loading: boolean = true;
   protected location: Location = this.getConst.DEFAULT_LOCATION;
 
-  public weatherData$!: Observable<WeatherApiResponse>;
-  private subscription!: Subscription;
+  protected readonly weatherData$: Observable<WeatherApiResponse>;
+  private readonly loadingSubject = new BehaviorSubject<boolean>(true);
+  protected readonly loading$ = this.loadingSubject.asObservable();
+
+  private readonly destroy$ = new Subject<void>();
 
   /**
    * Creates an instance of HomePage.
@@ -25,7 +27,16 @@ export class HomePage implements OnInit {
    * @memberof HomePage
    */
   constructor(private weatherService: WeatherService) {
-    this.getWeatherData();
+    this.weatherData$ = this.weatherService.getWeatherData(
+      this.location.coordinates.lat, this.location.coordinates.lon
+    ).pipe(
+      shareReplay(1),
+      tap(() => {
+        this.loadingSubject.next(false);
+        console.log('Weather data fetched');
+      }),
+      takeUntil(this.destroy$)
+    );
   }
 
   /**
@@ -41,7 +52,8 @@ export class HomePage implements OnInit {
    * @returns void
    */
   public ngOnDestroy(): void {
-    this.unsubscribe();
+    this.destroy$.next(); // Unsubscribe from the weather data
+    this.destroy$.complete(); // Complete the subject to avoid memory leaks
   }
 
   /**
@@ -50,9 +62,6 @@ export class HomePage implements OnInit {
    * @returns void
    */
   protected toggleRefresh(): void {
-    // Unsubscribe from the weather data
-    this.unsubscribe();
-
     // Re-fetch the data
     this.getWeatherData();
   }
@@ -70,33 +79,21 @@ export class HomePage implements OnInit {
   }
 
   /**
-   * Unsubscribe from the weather data.
-   * @private
-   * @returns void
-   */
-  private unsubscribe(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  /**
    * Get the weather data.
    * @private
    * @returns void
    */
   private getWeatherData(): void {
     // Show the loading spinner
-    this.loading = true;
-    
-    // Fetch the weather data
-    this.weatherData$ = this.weatherService.getWeatherData(
-      this.location.coordinates.lat, this.location.coordinates.lon
-    ).pipe(shareReplay(1)).pipe(
-      tap(() => this.loading = false) // Hide the loading spinner
-    ); // Share the data between multiple subscribers, don't re-fetch the data
+    this.loadingSubject.next(true);
 
-    // Subscribe to the weather data
-    this.subscription = this.weatherData$.subscribe();
+    // Fetch the weather data
+    this.weatherService.getWeatherData(
+      this.location.coordinates.lat, this.location.coordinates.lon
+    ).pipe(
+      shareReplay(1), // Share the data between multiple subscribers, don't re-fetch the data
+      tap(() => this.loadingSubject.next(false)), // Hide the loading spinner
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 }
