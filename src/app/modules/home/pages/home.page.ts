@@ -21,11 +21,11 @@ export class HomePage implements OnInit {
 
   protected loading: boolean = true;
   protected location: Location = this.getConst.DEFAULT_LOCATION;
+  protected lastUpdated!: Date;
+  protected activeSegment: String = 'hourly';
 
   public weatherData$!: Observable<WeatherApiResponse>;
   private subscription!: Subscription;
-
-  protected activeSegment: String = 'hourly';
 
   /**
    * Creates an instance of HomePage.
@@ -107,7 +107,10 @@ export class HomePage implements OnInit {
     this.weatherData$ = this.weatherService.getWeatherData(
       this.location.coordinates.lat, this.location.coordinates.lon
     ).pipe(shareReplay(1)).pipe(
-      tap(() => this.loading = false) // Hide the loading spinner
+      tap(() => {
+        this.lastUpdated = new Date();
+        this.loading = false
+      }) // Hide the loading spinner
     ); // Share the data between multiple subscribers, don't re-fetch the data
 
     // Subscribe to the weather data

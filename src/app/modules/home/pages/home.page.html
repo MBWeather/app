@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-title *ngIf="(weatherData$ | async)?.daily?.[0]">{{ (weatherData$ | async).daily[0]?.dt * getConst.MILLISECONDS | date }}</ion-title>
+  <ion-title *ngIf="(weatherData$ | async)?.daily?.[0]">{{ lastUpdated | date: 'dd.MM.yyyy' }} {{ 'app.at' | translate }} {{ lastUpdated | date: 'HH:mm' }}</ion-title>
 </ion-header>
 <ion-content [fullscreen]="true">
   
