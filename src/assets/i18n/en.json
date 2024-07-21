@@ -12,7 +12,11 @@
       "refresh": "Refresh",
       "english": "EN",
       "slovene": "SL",
-      "at": "at"
+      "at": "at",
+      "forecast": {
+        "weekly": "Weekly Forecast",
+        "hourly": "Hourly Forecast"
+      }
     }
   }
   

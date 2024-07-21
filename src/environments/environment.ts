@@ -43,7 +43,7 @@ export const environment = {
         KELVIN: 273.15
       },
       languages: {
-        default: 'en',
+        default: 'sl',
         available: [{short: 'sl', name: "app.slovene"}, {short: 'en', name: "app.english"}],
       },
       storage: {

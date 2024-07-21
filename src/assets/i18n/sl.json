@@ -12,7 +12,11 @@
       "refresh": "Osveži",
       "english": "EN",
       "slovene": "SL",
-      "at": "ob"
+      "at": "ob",
+      "forecast": {
+        "weekly": "Tedenska napoved",
+        "hourly": "Urna napoved"
+      }
     }
   }
   

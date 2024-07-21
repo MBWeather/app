@@ -38,10 +38,10 @@
     </ion-buttons>
     <ion-segment mode="ios" [(ngModel)]="activeSegment" value="hourly">
       <ion-segment-button color="transparent" (click)="hourlyForecast()" value="hourly">
-        <ion-label>Hourly Forecast</ion-label>
+        <ion-label>{{'app.forecast.hourly' | translate }}</ion-label>
       </ion-segment-button>
       <ion-segment-button color="transparent" (click)="weeklyForecast()" value="weekly">
-        <ion-label>Weekly Forecast</ion-label>
+        <ion-label>{{ 'app.forecast.weekly' | translate }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -58,7 +58,10 @@
                       }}</ion-text>
                   </div>
                   <div class="forecast-item-icon">
-                    <ion-icon name="sunny-outline"></ion-icon>
+                    <div class="weather-icon">
+                      <img [src]="'https://openweathermap.org/img/wn/' + forecast.weather[0].icon + '.png'"
+                        alt="Weather Icon">
+                    </div>
                   </div>
                   <div class="forecast-item-content">
                     <ion-text class="forecast-item-text">{{ forecast.temp - getConst.KELVIN | number: '1.0-0' }}
@@ -77,7 +80,10 @@
                       uppercase }}</ion-text>
                   </div>
                   <div class="forecast-item-icon">
-                    <ion-icon name="sunny-outline"></ion-icon>
+                    <div class="weather-icon">
+                      <img [src]="'https://openweathermap.org/img/wn/' + forecast.weather[0].icon + '.png'"
+                        alt="Weather Icon">
+                    </div>
                   </div>
                   <div class="forecast-item-content">
                     <ion-text class="forecast-item-text">{{ forecast.temp.max - getConst.KELVIN | number: '1.0-0' }}

@@ -8,6 +8,7 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
 register();
 
@@ -32,7 +33,10 @@ export class HomePage implements OnInit {
    * @param weatherService The weather service
    * @memberof HomePage
    */
-  constructor(private weatherService: WeatherService) {
+  constructor(
+    private weatherService: WeatherService,
+    private alertService: AlertService
+  ) {
     this.getWeatherData();
   }
 
@@ -193,7 +197,32 @@ export class HomePage implements OnInit {
    * @returns void
    */
   protected toggleMenu(): void {
-    console.log("Menu clicked");
+    this.alertService.presentAlert({
+      header: 'Menu',
+      subHeader: 'Subtitle 12345',
+      message: 'Toggle the menu',
+      inputs: [
+        {
+          name: 'checkbox1',
+          type: 'radio',
+          label: 'Checkbox 1',
+          value: 'value1',
+          checked: true
+        },
+        {
+          name: 'checkbox2',
+          type: 'radio',
+          label: 'Checkbox 2',
+          value: 'value2'
+        }
+      ],
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          console.log('OK clicked');
+        }
+      }]
+    });
   }
 
   /**
