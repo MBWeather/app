@@ -25,6 +25,8 @@ export class HomePage implements OnInit {
   public weatherData$!: Observable<WeatherApiResponse>;
   private subscription!: Subscription;
 
+  protected activeSegment: String = 'hourly';
+
   /**
    * Creates an instance of HomePage.
    * @param weatherService The weather service
@@ -152,6 +154,34 @@ export class HomePage implements OnInit {
    */
   protected weeklyForecast(): void {
     this.swiper.slideTo(1);
+  }
+
+  /**
+   * Slide change event. Update the active segment accordingly.
+   * @protected
+   * @returns void
+   */
+  protected onSlideChange(): void {
+    this.activeSegment = this.swiper.activeIndex === 0 ? 'hourly' : 'weekly';
+  }
+
+  /**
+   * Slide change event. Update the active segment accordingly.
+   * @protected
+   * @returns void
+   */
+  protected drawerExpand(): void {
+    console.log("Drawer expanded");
+  }
+
+  
+  /**
+   * Slide change event. Update the active segment accordingly.
+   * @protected
+   * @returns void
+   */
+  protected drawerCollapse(): void {
+    console.log("Drawer collapsed");
   }
 
   /**

@@ -31,16 +31,16 @@
 <lib-ionic-pullup [(state)]="pullUpState" [toolbarTopMargin]="1" [minBottomVisible]="250">
 
   <ion-toolbar #ionDragFooter>
-    <ion-buttons>
+    <ion-buttons style="margin-bottom: 1rem;">
       <ion-button (click)="toggleDrawer()" class="btn-pull-up">
-        <ion-icon slot="icon-only" name="remove-sharp" color="weather-primary" style="scale: 1.5;"></ion-icon>
+        <ion-icon slot="icon-only" name="remove-sharp" color="dark" style="scale: 1.5;"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-segment mode="ios" value="public">
-      <ion-segment-button color="transparent" (click)="hourlyForecast()" value="public">
+    <ion-segment mode="ios" [(ngModel)]="activeSegment" value="hourly">
+      <ion-segment-button color="transparent" (click)="hourlyForecast()" value="hourly">
         <ion-label>Hourly Forecast</ion-label>
       </ion-segment-button>
-      <ion-segment-button color="transparent" (click)="weeklyForecast()" value="private">
+      <ion-segment-button color="transparent" (click)="weeklyForecast()" value="weekly">
         <ion-label>Weekly Forecast</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -48,7 +48,7 @@
   <ion-content>
     <ng-container class="forecast-wrapper">
       <div class="forecast-content-wrapper">
-        <swiper-container #swiper [slidesPerView]="1">
+        <swiper-container #swiper [slidesPerView]="1" (swiperslidechange)="onSlideChange()">
           <swiper-slide>
             <div class="row">
               <div *ngFor="let forecast of ((weatherData$ | async)?.hourly | slice:0:7)" class="col">
