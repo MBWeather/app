@@ -80,3 +80,16 @@
     color: white;
   }
 }
+
+.full-screen-modal {
+  .modal-wrapper {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+  }
+}

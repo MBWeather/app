@@ -11,9 +11,10 @@ import Swiper from 'swiper';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertInput } from '@ionic/angular';
+import { AlertInput, ModalController } from '@ionic/angular';
 import { MBWTranslatePipe } from 'src/app/@mbweather/pipes/translate/translate.pipe';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { Router } from '@angular/router';
 
 register();
 
@@ -43,7 +44,8 @@ export class HomePage implements OnInit {
     private alertService: AlertService,
     private translateService: TranslateService,
     private mbwTranslatePipe: MBWTranslatePipe,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {
     this.getWeatherData();
   }
@@ -244,6 +246,6 @@ export class HomePage implements OnInit {
    * @returns void
    */
   protected toggleLocation(): void {
-    console.log("Toggle Location");
+    this.router.navigate(['/location']);
   }
 }
