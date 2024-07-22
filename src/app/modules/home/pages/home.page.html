@@ -97,7 +97,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="pullUpState">
-      expanded content shown now here...
+      <app-drawer [data]="(weatherData$ | async).current"></app-drawer>
     </ng-container>
   </ion-content>
 </lib-ionic-pullup>

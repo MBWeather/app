@@ -14,6 +14,7 @@ import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langaug
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { IonicPullupModule } from 'ionic-pullup';
 import { MBWTranslatePipe } from 'src/app/@mbweather/pipes/translate/translate.pipe';
+import { DrawerComponent } from 'src/app/@mbweather/components/drawer/drawer.component';
 
 const IMPORTS = [
   CommonModule,
@@ -24,7 +25,8 @@ const IMPORTS = [
   TranslateModule,
   LangaugeSelectorComponent,
   LineChartComponent,
-  IonicPullupModule
+  IonicPullupModule,
+  DrawerComponent
 ];
 
 const DECLARATIONS = [

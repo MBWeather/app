@@ -227,7 +227,7 @@ export class HomePage implements OnInit {
         handler: () => {
           this.toastService.showToast({
             message: this.mbwTranslatePipe.transform('app.language-changed'),
-            duration: 200000,
+            duration: 2000,
             color: 'weather-primary',
             position: 'top',
             translucent: true,
