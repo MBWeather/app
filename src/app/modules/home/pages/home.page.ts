@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertInput } from '@ionic/angular';
 import { MBWTranslatePipe } from 'src/app/@mbweather/pipes/translate/translate.pipe';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 register();
 
@@ -41,7 +42,8 @@ export class HomePage implements OnInit {
     private weatherService: WeatherService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private mbwTranslatePipe: MBWTranslatePipe
+    private mbwTranslatePipe: MBWTranslatePipe,
+    private toastService: ToastService
   ) {
     this.getWeatherData();
   }
@@ -221,9 +223,16 @@ export class HomePage implements OnInit {
       header: this.mbwTranslatePipe.transform('app.languages'),
       inputs: [...inputs],
       buttons: [{
-        text: this.mbwTranslatePipe.transform('app.close'),
+        text: this.mbwTranslatePipe.transform('app.save'),
         handler: () => {
-          console.log("Language changed to: ", this.translateService.currentLang);
+          this.toastService.showToast({
+            message: this.mbwTranslatePipe.transform('app.language-changed'),
+            duration: 200000,
+            color: 'weather-primary',
+            position: 'top',
+            translucent: true,
+            cssClass: ['custom-toast']
+          });
         }
       }]
     });
