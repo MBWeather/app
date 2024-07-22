@@ -9,6 +9,9 @@
     --ion-color-weather-primary-contrast-rgb: 255,255,255;
     --ion-color-weather-primary-shade: #3f2b8a;
     --ion-color-weather-primary-tint: #5a46a7;
+
+    --ion-color-weather-primary-translucent: rgba(72, 49, 157, 0.5);
+    --ion-color-weather-primary-shade-translucent: rgba(64, 43, 138, 0.5);
 }
 
 .ion-color-weather-primary {
@@ -18,4 +21,7 @@
 	--ion-color-contrast-rgb: var(--ion-color-weather-primary-contrast-rgb);
 	--ion-color-shade: var(--ion-color-weather-primary-shade);
 	--ion-color-tint: var(--ion-color-weather-primary-tint);
+
+    --ion-color-base-translucent: var(--ion-color-weather-primary-translucent);
+    --ion-color-shade-translucent: var(--ion-color-weather-primary-shade-translucent);
 }

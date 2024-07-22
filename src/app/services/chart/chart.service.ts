@@ -42,30 +42,30 @@ export class ChartService {
           fill: false,
           borderColor: '#36a2eb'
         },
-        {
-          data: weatherData.daily.map(day => day.wind_speed),
-          label: 'Wind Speed',
-          fill: false,
-          borderColor: '#ffcd56'
-        },
-        {
-          data: weatherData.daily.map(day => day.pressure / 10),
-          label: 'Pressure',
-          fill: false,
-          borderColor: '#9966ff'
-        },
-        {
-          data: weatherData.daily.map(day => day.dew_point - this.getConsts.KELVIN),
-          label: 'Dew Point',
-          fill: false,
-          borderColor: '#ff9f40'
-        },
-        {
-          data: weatherData.daily.map(day => day.uvi),
-          label: 'UV Index',
-          fill: false,
-          borderColor: '#4bc0c0'
-        }
+        // {
+        //   data: weatherData.daily.map(day => day.wind_speed),
+        //   label: 'Wind Speed',
+        //   fill: false,
+        //   borderColor: '#ffcd56'
+        // },
+        // {
+        //   data: weatherData.daily.map(day => day.pressure / 10),
+        //   label: 'Pressure',
+        //   fill: false,
+        //   borderColor: '#9966ff'
+        // },
+        // {
+        //   data: weatherData.daily.map(day => day.dew_point - this.getConsts.KELVIN),
+        //   label: 'Dew Point',
+        //   fill: false,
+        //   borderColor: '#ff9f40'
+        // },
+        // {
+        //   data: weatherData.daily.map(day => day.uvi),
+        //   label: 'UV Index',
+        //   fill: false,
+        //   borderColor: '#4bc0c0'
+        // }
       ],
       labels: weatherData.daily.map(day => new Date(day.dt * this.getConsts.MILLISECONDS).toLocaleDateString())
     };

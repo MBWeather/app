@@ -97,7 +97,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="pullUpState">
-      <app-drawer [data]="(weatherData$ | async).current"></app-drawer>
+      <app-drawer  [data]="(weatherData$ | async)"></app-drawer>
     </ng-container>
   </ion-content>
 </lib-ionic-pullup>

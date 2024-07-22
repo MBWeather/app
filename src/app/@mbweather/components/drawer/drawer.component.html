@@ -1,5 +1,88 @@
-<div class="container">
-  <div class="text-center">
+<div class="drawer container">
+  <div class="header text-center">
     <h2>Weather Details</h2>
+  </div>
+
+  <div class="content-wrapper row justify-content-center">    
+    <div class="card graph">
+      <div class="card-header">
+        <h6>Temp vs Humidity vs Feels like</h6>
+      </div>
+      <div class="card-body">
+        <app-line-chart [chartData]="chart.data" [chartOptions]="chart.options"></app-line-chart>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h6>Current Weather</h6>
+      </div>
+      <div class="card-body">
+        <div class="img-wrapper">
+          <img src="http://openweathermap.org/img/wn/{{ data.current.weather[0].icon }}@4x.png" alt="weather icon">
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h6>Sunrise</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.sunrise | date: 'shortTime' }}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h6>Sunset</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.sunset | date: 'shortTime' }}</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h6>Feels Like</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.feels_like - getConst.KELVIN | number: '1.0-0' }}°C</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h6>Pressure</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.pressure }} hPa</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h6>Humidity</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.humidity }}%</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h6>Wind</h6>
+      </div>
+      <div class="card-body">
+        <p>Speed: {{ data.current.wind_speed }} m/s</p>
+        <p>Direction: {{ data.current.wind_deg }}°</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h6>Cloudiness</h6>
+      </div>
+      <div class="card-body">
+        <p>{{ data.current.clouds }}%</p>
+      </div>
+    </div>
   </div>
 </div>
