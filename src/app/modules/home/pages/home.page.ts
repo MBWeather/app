@@ -9,13 +9,17 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertInput } from '@ionic/angular';
+import { MBWTranslatePipe } from 'src/app/@mbweather/pipes/translate/translate.pipe';
 
 register();
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
   protected readonly getConst = constants;
@@ -35,7 +39,9 @@ export class HomePage implements OnInit {
    */
   constructor(
     private weatherService: WeatherService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private translateService: TranslateService,
+    private mbwTranslatePipe: MBWTranslatePipe
   ) {
     this.getWeatherData();
   }
@@ -197,29 +203,27 @@ export class HomePage implements OnInit {
    * @returns void
    */
   protected toggleMenu(): void {
-    this.alertService.presentAlert({
-      header: 'Menu',
-      subHeader: 'Subtitle 12345',
-      message: 'Toggle the menu',
-      inputs: [
-        {
-          name: 'checkbox1',
-          type: 'radio',
-          label: 'Checkbox 1',
-          value: 'value1',
-          checked: true
-        },
-        {
-          name: 'checkbox2',
-          type: 'radio',
-          label: 'Checkbox 2',
-          value: 'value2'
-        }
-      ],
-      buttons: [{
-        text: 'OK',
+
+    const inputs: AlertInput[] = environment.app.config.languages.available.map(lang => {
+      return {
+        name: lang.short,
+        type: 'radio',
+        label: this.mbwTranslatePipe.transform(lang.name),
+        value: lang.short,
+        checked: this.translateService.currentLang === lang.short,
         handler: () => {
-          console.log('OK clicked');
+          this.translateService.use(lang.short);
+        }
+      };
+    });
+
+    this.alertService.presentAlert({
+      header: this.mbwTranslatePipe.transform('app.languages'),
+      inputs: [...inputs],
+      buttons: [{
+        text: this.mbwTranslatePipe.transform('app.close'),
+        handler: () => {
+          console.log("Language changed to: ", this.translateService.currentLang);
         }
       }]
     });

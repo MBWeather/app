@@ -39,6 +39,6 @@ export class AppComponent {
     this.translate.setDefaultLang(LANGUAGES.default);
     
     // Set the language based on the browser language
-    // this.translate.use(this.browserLang.match(langRegEx) ? this.browserLang : LANGUAGES.default);
+    this.translate.use(this.browserLang.match(langRegEx) ? this.browserLang : LANGUAGES.default);
   }
 }

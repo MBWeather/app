@@ -1,5 +1,6 @@
 {
     "app": {
+      "languages": "Languages",
       "lastUpdated": "Last updated",
       "currentForecast": "Current Forecast",
       "feelsLike": "Feels like",
@@ -10,9 +11,10 @@
       "pressure": "Pressure",
       "5DayForecast": "5-Day Forecast",
       "refresh": "Refresh",
-      "english": "EN",
-      "slovene": "SL",
+      "english": "English",
+      "slovene": "Slovenian",
       "at": "at",
+      "close": "Close",
       "forecast": {
         "weekly": "Weekly Forecast",
         "hourly": "Hourly Forecast"

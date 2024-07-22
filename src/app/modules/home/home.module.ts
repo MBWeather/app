@@ -13,6 +13,7 @@ import { DailyForecastComponent } from './components/daily-forecast/daily-foreca
 import { LangaugeSelectorComponent } from 'src/app/@mbweather/components/langauge-selector/langauge-selector.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { IonicPullupModule } from 'ionic-pullup';
+import { MBWTranslatePipe } from 'src/app/@mbweather/pipes/translate/translate.pipe';
 
 const IMPORTS = [
   CommonModule,
@@ -34,7 +35,8 @@ const DECLARATIONS = [
 ];
 
 const PROVIDERS = [
-  provideCharts(withDefaultRegisterables())
+  provideCharts(withDefaultRegisterables()),
+  MBWTranslatePipe
 ];
 
 @NgModule({

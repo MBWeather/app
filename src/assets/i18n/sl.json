@@ -1,5 +1,6 @@
 {
     "app": {
+      "languages": "Jeziki",
       "lastUpdated": "Zadnje pridobljeno",
       "currentForecast": "Trenutna napoved",
       "feelsLike": "Občutek je kot",
@@ -10,9 +11,10 @@
       "pressure": "Pritisk",
       "5DayForecast": "5-dnevna napoved",
       "refresh": "Osveži",
-      "english": "EN",
-      "slovene": "SL",
+      "english": "Angleščina",
+      "slovene": "Slovenščina",
       "at": "ob",
+      "close": "Zapri",
       "forecast": {
         "weekly": "Tedenska napoved",
         "hourly": "Urna napoved"
